@@ -1,5 +1,5 @@
 from django.db import models
-from datetime.date import today
+from datetime import date
 
 # Create your models here.
 
