@@ -10,12 +10,14 @@ class Paziente(models.Model):
 	nome = models.CharField(max_length = 100, help_text = 'Nome', blank = True)
 	
 	codfisc = models.CharField("Codice fiscale", max_length = 16, help_text = 'Codice fiscale', blank = True)
-	#inserire un Validator. Trovare il modo di segnalare la lunghezza fissa di 16 caratteri. 
+	#inserire un Validator. Trovare il modo di segnalare la lunghezza fissa di 16 caratteri.
+	
 	piva = models.CharField('Partita Iva', max_length = 50, help_text = 'P. Iva')
 	
 	paese = models.CharField('Città', max_length = 100, help_text = 'Città', blank = True)
 	provincia = models.CharField(max_length = 2, help_text = 'Prov.', blank = True)
 	#inserire anche qui un Validator, 2 caratteri maiuscoli
+
 	cap = models.CharField('CAP', max_length = 5, help_text = 'CAP', blank = True)
 	#validator anche qui
 	
