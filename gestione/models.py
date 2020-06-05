@@ -38,7 +38,7 @@ class Paziente(models.Model):
 		ordering = ['cognome','nome']
 		
 	def __str__(self):
-		pass
+		return ', '.join([self.cognome,self.nome])
 	
 	def get_absolute_url(self):
 		pass
