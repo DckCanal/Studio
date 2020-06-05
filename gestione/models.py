@@ -58,6 +58,8 @@ class Fattura(models.Model):
 	
 	def __str__(self):
 		pass
-	
+		#return "Fattura numero "+ self.numero+" intestata a "+self.paziente.cognome+" "+self.paziente.nome+" del "+self.data+", "+self.valore
+		#c'è un errore, self.paziente (ForeignKey) non ha attributo nome e cognome
+		
 	def get_absolute_url(self):
 		pass
