@@ -57,7 +57,7 @@ class Fattura(models.Model):
 		ordering = ['data','numero']
 	
 	def __str__(self):
-		pass
+		return "Fattura numero "+ self.numero+" intestata a "+self.paziente.cognome+" "+self.paziente.nome+" del "+self.data+", "+self.valore
 	
 	def get_absolute_url(self):
 		pass
