@@ -57,7 +57,9 @@ class Fattura(models.Model):
 		ordering = ['data','numero']
 	
 	def __str__(self):
-		return "Fattura numero "+ self.numero+" intestata a "+self.paziente.cognome+" "+self.paziente.nome+" del "+self.data+", "+self.valore
-	
+		pass
+		#return "Fattura numero "+ self.numero+" intestata a "+self.paziente.cognome+" "+self.paziente.nome+" del "+self.data+", "+self.valore
+		#c'è un errore, self.paziente (ForeignKey) non ha attributo nome e cognome
+		
 	def get_absolute_url(self):
 		pass
