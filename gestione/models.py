@@ -51,7 +51,7 @@ class Fattura(models.Model):
 	data = models.DateField(default = date.today, help_text = 'Data <em>YYYY-MM-DD</em>.')
 	
 	numero = models.PositiveSmallIntegerField('Numero d\'ordine', help_text = 'Numero d\'ordine')
-	#inserire di default il numero più grande +1 dell'anno corrente
+	#inserire di default il numero più grande +1 dell'anno corrente, chissà come si fa...
 	
 	class Meta:
 		ordering = ['data','numero']
