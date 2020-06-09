@@ -16,3 +16,5 @@ class FatturaListView(generic.ListView):
 
 class FatturaDetailView(generic.ListView):
     model = Fattura
+
+#da definire, la View per l'inserimento di un nuovo paziente
