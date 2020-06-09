@@ -12,7 +12,7 @@ class Paziente(models.Model):
 	codfisc = models.CharField("Codice fiscale", max_length = 16, help_text = 'Codice fiscale', blank = True)
 	#inserire un Validator. Trovare il modo di segnalare la lunghezza fissa di 16 caratteri.
 	
-	piva = models.CharField('Partita Iva', max_length = 50, help_text = 'P. Iva')
+	piva = models.CharField('Partita Iva', max_length = 50, help_text = 'P. Iva', blank = True)
 	
 	paese = models.CharField('Città', max_length = 100, help_text = 'Città', blank = True)
 	provincia = models.CharField(max_length = 2, help_text = 'Prov.', blank = True)
@@ -27,7 +27,7 @@ class Paziente(models.Model):
 	telefono = models.CharField(max_length = 25, help_text = 'Telefono', blank = True)
 	email = models.EmailField(help_text = 'email', blank = True)
 	
-	data_nascita  = models.DateField('Data di nascita', help_text = 'Data di nascita <em>YYYY-MM-DD</em>.', blank = True)
+	data_nascita  = models.DateField('Data di nascita', help_text = 'Data di nascita <em>YYYY-MM-DD</em>.', blank = True, null=True)
 	
 	paese_nascita = models.CharField('Città di nascita', max_length = 100, help_text = 'Città di nascita', blank = True)
 	provincia_nascita = models.CharField('Provincia di nascita',max_length = 2, help_text = 'Prov. di nascita', blank = True)
