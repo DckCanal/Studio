@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import date
-
+from django.urls import reverse
 # Create your models here.
 
 class Paziente(models.Model):
@@ -41,7 +41,7 @@ class Paziente(models.Model):
 		return ', '.join([self.cognome, self.nome])
 	
 	def get_absolute_url(self):
-		pass
+		return reverse('dettaglio-paziente', args=[str(self.id)])
 
 class Fattura(models.Model):
 	"""Classe per rappresentare la fattura."""
@@ -62,4 +62,4 @@ class Fattura(models.Model):
 		#c'è un errore, self.paziente (ForeignKey) non ha attributo nome e cognome
 		
 	def get_absolute_url(self):
-		pass
+		return reverse('dettaglio-fattura', args=[str(self.id)])

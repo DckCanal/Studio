@@ -3,6 +3,13 @@
 
    <head><title>Studio - il Salice</title></head>
    <body><h1>Benvenuto nel Salice</h1>
+   {% block navbar %}
+      <ul>
+         <li><a href="{% url 'home' %}">Home</a></li>
+         <li><a href="{% url 'fatture' %}">Fatture</a></li>
+         <li><a href="">Nuovo paziente</a></li>
+      </ul>
+   {% endblock navbar %}
    {% block main-content %}
    
    {% endblock main-content %}
