@@ -2,4 +2,14 @@
 {% block main-content %}
 <p>paziente detail view</p>
 <h2>{{paziente}}</h2>
+{% if paziente.fattura_set.all %}
+<p>elenco delle fatture del paziente</p>
+<ul>
+    {% for f in paziente.fattura_set.all %}
+    <hr><li>{{f}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>nessuna fattura intestata al paziente</p>
+{% endif %}
 {% endblock main-content %}
