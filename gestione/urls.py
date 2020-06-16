@@ -7,4 +7,5 @@ urlpatterns = [
     path('fatture/', views.FatturaListView.as_view(), name='fatture'),
     path('fattura/<int:pk>', views.FatturaDetailView.as_view(), name='dettaglio-fattura'),
     path('paziente/<int:pk>', views.PazienteDetailView.as_view(), name='dettaglio-paziente'),
+    path('fattura-pdf/<int:pk>',views.fattura_pdf,name="fattura-pdf")
 ]

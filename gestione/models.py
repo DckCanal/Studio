@@ -63,3 +63,6 @@ class Fattura(models.Model):
 		
 	def get_absolute_url(self):
 		return reverse('dettaglio-fattura', args=[str(self.id)])
+
+	def get_year(self):
+		return self.data.year
