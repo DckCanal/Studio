@@ -1,10 +1,8 @@
 {% extends "generic.html" %}
 
 {% block main-content %}
-<p>fattura list view </p>
-
 {% for f in elenco_fatture %}
-<hr><p><a href="{{f.get_absolute_url}}">{{f}}</a></p>
+<hr><p><a href="{{f.get_absolute_url}}">{{f}}</a> - <a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></p>
 {% endfor %}
 
 {% endblock main-content %}

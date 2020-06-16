@@ -1,6 +1,5 @@
 {% extends "generic.html" %}
 {% block main-content %}
-<p>paziente list view</p>
 {% for p in elenco_pazienti %}
 <hr><a href="{{p.get_absolute_url}}">{{p}}</a>
 {% endfor %}

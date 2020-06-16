@@ -54,7 +54,7 @@ class Fattura(models.Model):
 	#inserire di default il numero più grande +1 dell'anno corrente, chissà come si fa...
 	
 	class Meta:
-		ordering = ['data','numero']
+		ordering = ['-data','-numero']
 	
 	def __str__(self):
 		return "Fattura numero " + str(self.numero) + " del " + str(self.data)
