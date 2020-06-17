@@ -38,6 +38,11 @@ class FatturaDetailView(generic.DetailView):
     context_object_name = 'fattura'
 
 
+def home_page(request):
+    context = {}
+    return render(request,'gestione/home.html',context)
+
+
 def fattura_pdf(request, pk):
     f = Fattura.objects.get(id=pk)
     paz = f.paziente
