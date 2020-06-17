@@ -1,0 +1,6 @@
+{% extends "generic.html" %}
+{% block main-content %}
+    <hr>
+    {{fattura}}
+    <a href="{{fattura.paziente.get_absolute_url}}">{{fattura.paziente}}</a>
+{% endblock main-content %} 

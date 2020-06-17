@@ -1,0 +1,13 @@
+{% extends "generic.html" %}
+{% block main-content %}
+<h2>{{paziente}}</h2>
+{% if paziente.fattura_set.all %}
+<ul>
+    {% for f in paziente.fattura_set.all %}
+    <hr><li><a href="{{ f.get_absolute_url }}">{{f}}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>nessuna fattura intestata al paziente</p>
+{% endif %}
+{% endblock main-content %}

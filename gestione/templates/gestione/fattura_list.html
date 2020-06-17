@@ -1,0 +1,9 @@
+{% extends "generic.html" %}
+
+{% block main-content %}
+{% for f in elenco_fatture %}
+<hr><p><a href="{{f.get_absolute_url}}">{{f}}</a> - <a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></p>
+<a href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>
+{% endfor %}
+
+{% endblock main-content %}

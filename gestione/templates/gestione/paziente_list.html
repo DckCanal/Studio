@@ -1,0 +1,6 @@
+{% extends "generic.html" %}
+{% block main-content %}
+{% for p in elenco_pazienti %}
+<hr><a href="{{p.get_absolute_url}}">{{p}}</a>
+{% endfor %}
+{% endblock main-content %}
