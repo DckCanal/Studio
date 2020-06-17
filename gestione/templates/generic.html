@@ -34,12 +34,6 @@
    </head>
    <body>
    {% block navbar %}
-      <!-- SOSTITUITO DA NAVBAR BOOTSTRAP
-      <ul>
-         <li><a href="{% url 'home' %}">Home</a></li>
-         <li><a href="{% url 'fatture' %}">Fatture</a></li>
-         <li><a href="">Nuovo paziente</a></li>
-      </ul>-->
 
       <!-- FROM BOOTSTRAP EXAMPLES -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -75,8 +69,6 @@
 <main role="main" class="container">
 
   <div class="starter-template">
-   
-   <h1>Benvenuto nel Salice</h1>
    {% block main-content %}
    
    {% endblock main-content %}

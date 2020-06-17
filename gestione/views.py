@@ -39,7 +39,11 @@ class FatturaDetailView(generic.DetailView):
 
 
 def home_page(request):
-    context = {}
+    paz = Paziente.objects.all().order_by('-ultima_modifica')[:15]
+    context = {
+        'num_paz': len(paz),
+        'paz':paz,
+    }
     return render(request,'gestione/home.html',context)
 
 

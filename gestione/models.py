@@ -34,6 +34,8 @@ class Paziente(models.Model):
 	
 	prezzo = models.DecimalField(help_text = 'Prezzo', max_digits = 8, decimal_places = 2, blank = True, default = 50.00)
 	
+	ultima_modifica = models.DateTimeField(help_text = 'Ultima modifica', auto_now = True)
+	
 	class Meta:
 		ordering = ['cognome','nome']
 		
