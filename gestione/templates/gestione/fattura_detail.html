@@ -2,5 +2,6 @@
 {% block main-content %}
     <hr>
     {{fattura}}
-    <a href="{{fattura.paziente.get_absolute_url}}">{{fattura.paziente}}</a>
+    <a href="{{fattura.paziente.get_absolute_url}}">{{fattura.paziente}}</a><br/>
+    <a href="{% url 'fattura-pdf' fattura.id %}">Stampa pdf</a>
 {% endblock main-content %} 
