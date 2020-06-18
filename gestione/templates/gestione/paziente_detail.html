@@ -1,6 +1,8 @@
 {% extends "generic.html" %}
 {% block main-content %}
 <h2>{{paziente}}</h2>
+<p>Modificato il: {{paziente.ultima_modifica}}</p>
+<p>Prezzo standard: {{paziente.prezzo}}</p>
 {% if paziente.fattura_set.all %}
 <ul>
     {% for f in paziente.fattura_set.all %}
