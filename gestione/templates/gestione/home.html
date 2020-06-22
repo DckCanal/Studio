@@ -4,4 +4,11 @@
 
 <h1> Benvenuto nella Home page de 'il Salice'!</h1>
 
+
+<h3>Ci sono {{num_paz}} pazienti in elenco</h3>
+
+{% for p in paz %}
+    <p>{{p}}</p>
+{% endfor %}
+
 {% endblock main-content %}

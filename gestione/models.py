@@ -40,7 +40,7 @@ class Paziente(models.Model):
 		ordering = ['cognome','nome']
 		
 	def __str__(self):
-		return ', '.join([self.cognome, self.nome])
+		return ' '.join([self.cognome, self.nome])
 	
 	def get_absolute_url(self):
 		return reverse('dettaglio-paziente', args=[str(self.id)])
