@@ -9,10 +9,13 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.units import inch
+from django.contrib.auth.mixins import LoginRequiredMixin
 styles = getSampleStyleSheet()
 
 # Create your views here.
-
+#Per limitare l'accesso ai soli utenti registrati nelle Classi, aggiungi come classe
+#da cui ereditare, prima delle altre, LoginRequiredMixin. Al loro interno puoi specificare
+#il campo login_url e redirect_field_name.
 
 class PazienteListView(generic.ListView):
     """View di elenco dei pazienti, home page del sito"""
@@ -37,7 +40,7 @@ class FatturaDetailView(generic.DetailView):
     model = Fattura
     context_object_name = 'fattura'
 
-
+# per limitare accesso agli utenti registrati: @login_required
 def home_page(request):
     paz = Paziente.objects.all().order_by('-ultima_modifica')[:15]
     context = {
