@@ -53,12 +53,14 @@ def home_page(request):
 def fattura_pdf(request, pk):
 
     title_style=ParagraphStyle('title',parent=styles['Normal'],fontName='Helvetica',fontSize=21,spaceAfter=15)    
-    subtitle_style=ParagraphStyle('subtitle',parent=styles['Normal'],fontName='Helvetica',fontSize=18,spaceAfter=15)
+    subtitle_style=ParagraphStyle('subtitle',parent=styles['Normal'],fontName='Helvetica',fontSize=18,spaceAfter=25)
     info_style=ParagraphStyle('info',parent=styles['Normal'],fontName='Helvetica',fontSize=12)
-    heading_style=ParagraphStyle('heading',parent=styles['Normal'],fontName='Helvetica',fontSize=15)
+    heading_style=ParagraphStyle('heading',parent=styles['Normal'],fontName='Helvetica',fontSize=15, spaceAfter=10)
+    bottom_style=ParagraphStyle('bottom',parent=styles['Normal'],fontName='Helvetica',fontSize=10)
+    
     f = Fattura.objects.get(id=pk)
     paz = f.paziente
-    nome_file = str(f.numero) + "-" + str(f.get_year()) + ".pdf"
+    nome_file = str(f.numero) + "-" + str(f.get_month()) + "/" + str(f.get_year()) + ".pdf"
 
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(buffer)
@@ -102,7 +104,7 @@ def fattura_pdf(request, pk):
 
     text = f"Fattura numero {f.numero} del {f.data}"
 
-    p = Paragraph(text, style)
+    p = Paragraph(text, heading_style)
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 
@@ -135,7 +137,7 @@ def fattura_pdf(request, pk):
         (incluso corrieri, se previsti, e banche, per incassi e pagamenti). Al di
         fuori di questi casi non è prevista la divulgazione e/o diffusione di dati a terzi.<br/>
     '''
-    p = Paragraph(text, style)
+    p = Paragraph(text, bottom_style)
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 

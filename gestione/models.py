@@ -68,3 +68,6 @@ class Fattura(models.Model):
 
 	def get_year(self):
 		return self.data.year
+	
+	def get_month(self):
+	    return self.data.month
