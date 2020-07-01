@@ -6,7 +6,7 @@ import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -51,6 +51,11 @@ def home_page(request):
 
 
 def fattura_pdf(request, pk):
+
+    title_style=ParagraphStyle('title',parent=styles['Normal'],fontName='Helvetica',fontSize=21,spaceAfter=15)    
+    subtitle_style=ParagraphStyle('subtitle',parent=styles['Normal'],fontName='Helvetica',fontSize=18,spaceAfter=15)
+    info_style=ParagraphStyle('info',parent=styles['Normal'],fontName='Helvetica',fontSize=12)
+    heading_style=ParagraphStyle('heading',parent=styles['Normal'],fontName='Helvetica',fontSize=15)
     f = Fattura.objects.get(id=pk)
     paz = f.paziente
     nome_file = str(f.numero) + "-" + str(f.get_year()) + ".pdf"
@@ -60,9 +65,9 @@ def fattura_pdf(request, pk):
     Story = [Spacer(1, 2*inch)]
     style = styles["Normal"]
 
-    text = '<font size="18">Marco De Canal</font><br/><font size="14">Massofisioterapista</font><br/>'
-    p = Paragraph(text, style)
+    p = Paragraph('Marco De Canal', title_style)
     Story.append(p)
+    Story.append(Paragraph('Massofisioterapista',subtitle_style))
     Story.append(Spacer(1, 0.2*inch))
 
     text = '''
@@ -70,7 +75,7 @@ def fattura_pdf(request, pk):
         <i>C.F.:</i> DCNMRC90L25D142Z<br/>
         <i>P.IVA:</i> 04370000400<br/>
     '''
-    p = Paragraph(text, style)
+    p = Paragraph(text, info_style)
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 
@@ -79,7 +84,7 @@ def fattura_pdf(request, pk):
         <i>email: </i> marco.decanal@gmail.com<br/>
         <i>Indirizzo studio: </i> Via XX Settembre 1, 47842, S. Giovanni in M.no (RN)<br/>
     '''
-    p = Paragraph(text, style)
+    p = Paragraph(text, info_style)
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 
@@ -91,7 +96,7 @@ def fattura_pdf(request, pk):
     if(paz.via and paz.civico and paz.cap and paz.paese and paz.provincia):
         text += f"<br/> {paz.via} {paz.civico}, {paz.cap}, {paz.paese} ({paz.provincia})<br/>"
 
-    p = Paragraph(text, style)
+    p = Paragraph(text, heading_style)
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 
