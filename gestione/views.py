@@ -168,8 +168,144 @@ def privacy_pdf(request,pk):
     Story = []
     style = styles["Normal"]
     
+    title_style=ParagraphStyle('title',parent=style,fontName='Helvetica',fontSize=15, leading=18,alignment=1)
+    body_style=ParagraphStyle('body',parent=style,fontName='Helvetica',fontSize=9,leading=10,spaceAfter=2)
+    heading_style=ParagraphStyle('heading',parent=style,fontName='Helvetica',fontSize=11,leading=13,spaceBefore=2,alignment=1)
+    footer_style=ParagraphStyle('footer',parent=style,fontName='Helvetica',fontSize=11,leading=13,alignment=2)
 
+    text = 'il Salice - studio di massofisioterapia e tecniche osteopatiche'
+    p = Paragraph(text,title_style)
+    Story.append(p)
+    Story.append(Spacer(1, 0.2*inch))
+    
+    text = '''<font size="11">AUTORIZZAZIONE AL TRATTAMENTO DEI DATI RELATIVI 
+    ALLA SALUTE - INFORMATIVA AI SENSI DELL’ART. 13 DEL REG. UE 2016/679</font>'''
+    p = Paragraph(text,title_style)
+    Story.append(p)
+    Story.append(Spacer(1, 0.2*inch))
 
+    if(paz.nome and paz.nome):
+        Story.append(Paragraph(f'Gentile Sig.\\Sig.ra {paz.nome} {paz.cognome}',body_style))
+    
+    Story.append(Paragraph('''
+    ai sensi dell’art. 13 del Regolamento Europeo 2016/679 (di seguito Reg. UE), 
+    ed in relazione ai dati personali di cui il sottoscritto Marco De Canal 
+    entrerà in possesso, La informo di quanto segue:
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    1 - FINALITÀ DEL TRATTAMENTO DEI DATI
+    ''',heading_style))
+    Story.append(Paragraph('''
+    Il trattamento dei dati è finalizzato unicamente alla corretta e completa esecuzione 
+    del mio incarico professionale connesso con le attività di valutazione massofisioterapica, 
+    prevenzione, cura e riabilitazione da me svolte a tutela della sua salute.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    2 - MODALITÀ DEL TRATTAMENTO DEI DATI
+    ''',heading_style))
+    Story.append(Paragraph('''
+    Il trattamento dei dati è realizzato per mezzo delle operazioni o complesso di 
+    operazioni indicate all’art. 2 del Reg. UE. Il trattamento dei dati è svolto dal Titolare.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    3 - CONFERIMENTO DEI DATI
+    ''',heading_style))
+    Story.append(Paragraph('''
+    Il conferimento dei dati personali e relativi alla salute è strettamente 
+    necessario ai fini dello svolgimento delle attività di cui al punto 1.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    4 - RIFIUTO DI CONFERIMENTO DEI DATI
+    ''',heading_style))
+    Story.append(Paragraph('''
+    L’eventuale rifiuto da parte sua di conferire dati personali nel caso 
+    di cui al punto 3 comporta l’impossibilità di adempiere alle attività di cui al punto 1.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    5 - COMUNICAZIONE DEI DATI
+    ''',heading_style))
+    Story.append(Paragraph('''
+    I dati personali possono essere conosciuti dagli incaricati del trattamento 
+    e possono essere comunicati per le finalità di cui al punto 1 a familiari, 
+    fiscalisti, collaboratori interni, soggetti comunque operanti nel settore 
+    medico\fisioterapico e, in genere, a tutti quei soggetti cui la comunicazione 
+    sia necessaria per il corretto adempimento delle finalità indicate nel punto 1.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    6 - DIFFUSIONE DEI DATI
+    ''',heading_style))
+    Story.append(Paragraph('''
+    I dati personali non sono soggetti a diffusione. Per lo svolgimento 
+    del presente incarico, Marco De Canal potrà altresì venire a conoscenza 
+    ed utilizzare dati relativi alla salute per il trattamento dei quali, 
+    in ottemperanza alle disposizioni normative sopra richiamate (art. 6 del Reg. UE), 
+    è con la presente a richiedere espresso consenso. I dati verranno conservati, 
+    per il periodo di tempo previsto dalla normativa comunitaria, da leggi, o da 
+    regolamenti. I dati potranno essere comunicati a soggetti pubblici o privati, 
+    nei limiti strettamente pertinenti all’espletamento dell’incarico conferito e 
+    nel rispetto, in ogni caso, del segreto professionale.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    7 - DIRITTI DELL’INTERESSATO
+    ''',heading_style))
+    Story.append(Paragraph('''
+    Gli artt. 15, 16, 17, 18, 20 e 21 del Reg. UE le conferiscono l’esercizio di specifici 
+    diritti, tra cui quello di ottenere dal Titolare la conferma dell’esistenza o meno 
+    di propri dati personali e la loro messa disposizione in forma intelligibile; lei ha 
+    diritto di avere conoscenza dell’origine dei dati, della finalità e delle modalità del 
+    trattamento, della logica applicata al trattamento, degli estremi identificativi del 
+    Titolare e dei soggetti cui i dati possono essere comunicati; ha inoltre diritto di 
+    ottenere la rettifica, la cancellazione, la limitazione al trattamento, la portabilità 
+    e l’opposizione al trattamento dei dati.
+    ''',body_style))
+
+    Story.append(Paragraph('''
+    8 - TITOLARE DEL TRATTAMENTO
+    ''',heading_style))
+    Story.append(Paragraph('''
+    Titolare del trattamento è Marco De Canal, via XX Settembre 1, 
+    San Giovanni in Marignano (RN).
+    ''',body_style))
+    
+    Story.append(Spacer(1, 0.2*inch))
+
+    text = f'Io sottoscritto {paz.nome} {paz.cognome}, '
+    if(paz.codfisc):
+        text += f'codice fiscale {paz.codfisc} '
+    if(paz.piva):
+        text += f'partita IVA {paz.piva} '
+    if(paz.data_nascita and paz.paese_nascita and paz.provincia_nascita):
+        text += f'<br/>nato/a a {paz.paese_nascita} ({paz.provincia_nascita}) il {paz.data_nascita} '
+    if(paz.paese and paz.cap and paz.via and paz.provincia and paz.civico):
+        text += f'<br/>residente a {paz.paese} ({paz.provincia}), {paz.cap}, in {paz.via} {paz.civico} '
+    
+    text += '''
+    acquisite le summenzionate informazioni fornitemi dal Titolare del 
+    trattamento ai sensi dell’art. 13 del Reg. UE, e consapevole, 
+    in particolare che il trattamento potrà riguardare dati relativi alla salute, 
+    presto il mio consenso per il trattamento dei dati, anche dati sanitari, 
+    necessari allo svolgimento delle operazioni indicate nell’informativa.
+    '''
+    Story.append(Paragraph(text,body_style))
+    Story.append(Spacer(1, 0.2*inch))
+
+    data = datetime.date.today()
+    datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
+    Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
+    Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
+    Story.append(Paragraph('Firma: _______________________________________',body_style))
+    Story.append(Spacer(1,0.4*inch))
+
+    Story.append(Paragraph('De Canal Marco<br/>P.Iva 04370000400<br/>Via Brescia 205/B, San Giovanni in Marignano (RN)',footer_style))
+
+    #chiusura documento
     doc.build(Story)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='privacy.pdf')
@@ -182,10 +318,10 @@ def consenso_pdf(request,pk):
     Story = []
     style = styles["Normal"]
     
-    title_style=ParagraphStyle('title',parent=styles['Normal'],fontName='Helvetica',fontSize=15, leading=18,alignment=1)
-    body_style=ParagraphStyle('body',parent=styles['Normal'],fontName='Helvetica',fontSize=10,leading=12,spaceBefore=2)
-    heading_style=ParagraphStyle('heading',parent=styles['Normal'],fontName='Helvetica',fontSize=11,leading=13,alignment=1)
-    footer_style=ParagraphStyle('footer',parent=styles['Normal'],fontName='Helvetica',fontSize=11,leading=13,alignment=2)
+    title_style=ParagraphStyle('title',parent=style,fontName='Helvetica',fontSize=15, leading=18,alignment=1)
+    body_style=ParagraphStyle('body',parent=style,fontName='Helvetica',fontSize=10,leading=12,spaceBefore=2)
+    heading_style=ParagraphStyle('heading',parent=style,fontName='Helvetica',fontSize=11,leading=13,alignment=1)
+    footer_style=ParagraphStyle('footer',parent=style,fontName='Helvetica',fontSize=11,leading=13,alignment=2)
 
     text = 'il Salice - studio di massofisioterapia e tecniche osteopatiche'
     p = Paragraph(text,title_style)
