@@ -4,7 +4,10 @@
 <p>Modificato il: {{paziente.ultima_modifica}}</p>
 <p>Prezzo standard: {{paziente.prezzo}}</p>
 <br /><br />
-<p><a href="{% url 'privacy-pdf' paziente.pk %}">Privacy</a> <a href="{% url 'consenso-pdf' paziente.pk %}">Consenso informato</a></p>
+<p><a href="{% url 'privacy-pdf' paziente.pk 0 %}">Privacy</a>
+(<a href="{% url 'privacy-pdf' paziente.pk 1 %}">minorenne</a>)</p>
+<p><a href="{% url 'consenso-pdf' paziente.pk 0 %}">Consenso informato</a>
+(<a href="{% url 'consenso-pdf' paziente.pk 1 %}">minorenne</a>)</p>
 {% if paziente.fattura_set.all %}
 <ul>
     {% for f in paziente.fattura_set.all %}

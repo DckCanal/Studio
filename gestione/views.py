@@ -160,18 +160,18 @@ def fattura_pdf(request, pk):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=nome_file)
 
-def privacy_pdf(request,pk):
+def privacy_pdf(request,pk,minorenne=0):
     """Generazione modulo privacy del paziente pk"""
     paz = Paziente.objects.get(pk=pk)
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer)
+    doc = SimpleDocTemplate(buffer, topMargin=0.5*inch, bottomMargin=0.5*inch, leftMargin=0.5*inch, rightMargin=0.5*inch)
     Story = []
     style = styles["Normal"]
     
     title_style=ParagraphStyle('title',parent=style,fontName='Helvetica',fontSize=15, leading=18,alignment=1)
     body_style=ParagraphStyle('body',parent=style,fontName='Helvetica',fontSize=9,leading=10,spaceAfter=2)
     heading_style=ParagraphStyle('heading',parent=style,fontName='Helvetica',fontSize=11,leading=13,spaceBefore=2,alignment=1)
-    footer_style=ParagraphStyle('footer',parent=style,fontName='Helvetica',fontSize=11,leading=13,alignment=2)
+    footer_style=ParagraphStyle('footer',parent=style,fontName='Helvetica',fontSize=9,leading=10,alignment=2)
 
     text = 'il Salice - studio di massofisioterapia e tecniche osteopatiche'
     p = Paragraph(text,title_style)
@@ -184,8 +184,10 @@ def privacy_pdf(request,pk):
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 
-    if(paz.nome and paz.nome):
+    if(paz.nome and paz.nome and minorenne==0):
         Story.append(Paragraph(f'Gentile Sig.\\Sig.ra {paz.nome} {paz.cognome}',body_style))
+    else:
+        Story.append(Paragraph('Gentile Sig.\\Sig.ra __________________________________',body_style))
     
     Story.append(Paragraph('''
     ai sensi dell’art. 13 del Regolamento Europeo 2016/679 (di seguito Reg. UE), 
@@ -276,7 +278,21 @@ def privacy_pdf(request,pk):
     
     Story.append(Spacer(1, 0.2*inch))
 
-    text = f'Io sottoscritto {paz.nome} {paz.cognome}, '
+
+
+    text = ''
+    if(minorenne == 0):
+        text = 'Io sottoscritto '
+    else:
+        text = '''
+        Io sottoscritto/a _______________________________________________, 
+        C.F./P.Iva_________________________
+        nato/a a_______________________________ il__/__/____ e residente 
+        a____________________________________ (____)
+        in via_______________________________________ N° __________
+        '''
+        text += 'in qualità di Genitore/Rappresentante legale di '
+    text += f'{paz.nome} {paz.cognome}, '
     if(paz.codfisc):
         text += f'codice fiscale {paz.codfisc} '
     if(paz.piva):
@@ -299,7 +315,10 @@ def privacy_pdf(request,pk):
     data = datetime.date.today()
     datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
     Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
-    Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
+    if (minorenne==0):
+        Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
+    else:
+        Story.append(Paragraph('Nome e cognome ____________________', body_style))
     Story.append(Paragraph('Firma: _______________________________________',body_style))
     Story.append(Spacer(1,0.4*inch))
 
@@ -310,18 +329,18 @@ def privacy_pdf(request,pk):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='privacy.pdf')
 
-def consenso_pdf(request,pk):
+def consenso_pdf(request,pk,minorenne=0):
     """Generazione modulo consenso informato del paziente pk"""
     paz = Paziente.objects.get(pk=pk)
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer)
+    doc = SimpleDocTemplate(buffer, topMargin=0.5*inch, bottomMargin=0.5*inch, leftMargin=0.5*inch, rightMargin=0.5*inch)
     Story = []
     style = styles["Normal"]
     
     title_style=ParagraphStyle('title',parent=style,fontName='Helvetica',fontSize=15, leading=18,alignment=1)
     body_style=ParagraphStyle('body',parent=style,fontName='Helvetica',fontSize=10,leading=12,spaceBefore=2)
     heading_style=ParagraphStyle('heading',parent=style,fontName='Helvetica',fontSize=11,leading=13,alignment=1)
-    footer_style=ParagraphStyle('footer',parent=style,fontName='Helvetica',fontSize=11,leading=13,alignment=2)
+    footer_style=ParagraphStyle('footer',parent=style,fontName='Helvetica',fontSize=10,leading=12,alignment=2)
 
     text = 'il Salice - studio di massofisioterapia e tecniche osteopatiche'
     p = Paragraph(text,title_style)
@@ -333,7 +352,20 @@ def consenso_pdf(request,pk):
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
     
-    text = f'Io sottoscritto {paz.nome} {paz.cognome}, '
+    text = ''
+    if(minorenne == 0):
+        text = 'Io sottoscritto '
+    else:
+        text = '''
+        Io sottoscritto/a _______________________________________________, 
+        C.F./P.Iva_________________________
+        nato/a a_______________________________ il__/__/____ e residente 
+        a____________________________________ (____)
+        in via_______________________________________ N° __________
+        '''
+        text += 'in qualità di Genitore/Rappresentante legale di '
+
+    text += f'{paz.nome} {paz.cognome}, '
     if(paz.codfisc):
         text += f'codice fiscale {paz.codfisc} '
     if(paz.piva):
@@ -394,7 +426,10 @@ def consenso_pdf(request,pk):
     data = datetime.date.today()
     datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
     Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
-    Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
+    if (minorenne==0):
+        Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
+    else:
+        Story.append(Paragraph('Nome e cognome ____________________', body_style))
     Story.append(Paragraph('Firma: _______________________________________',body_style))
     Story.append(Spacer(1,0.4*inch))
 
