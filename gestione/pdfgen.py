@@ -141,7 +141,7 @@ def genera_consenso_informato(request, pk, minorenne):
     Story.append(Spacer(1, 0.2*inch))
     
     text = ''
-    if(minorenne == 0):
+    if(not minorenne):
         text = 'Io sottoscritto '
     else:
         text = '''
@@ -151,7 +151,7 @@ def genera_consenso_informato(request, pk, minorenne):
         a____________________________________ (____)
         in via_______________________________________ N° __________
         '''
-        text += 'in qualità di Genitore/Rappresentante legale di '
+        text += '<br/>in qualità di Genitore/Rappresentante legale di '
 
     text += f'{paz.nome} {paz.cognome}, '
     if(paz.codfisc):
@@ -214,7 +214,7 @@ def genera_consenso_informato(request, pk, minorenne):
     data = datetime.date.today()
     datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
     Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
-    if (minorenne==0):
+    if (not minorenne):
         Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
     else:
         Story.append(Paragraph('Nome e cognome ____________________', body_style))
@@ -250,7 +250,7 @@ def genera_privacy(request, pk, minorenne):
     Story.append(p)
     Story.append(Spacer(1, 0.2*inch))
 
-    if(paz.nome and paz.nome and minorenne==0):
+    if(paz.nome and paz.nome and not minorenne):
         Story.append(Paragraph(f'Gentile Sig.\\Sig.ra {paz.nome} {paz.cognome}',body_style))
     else:
         Story.append(Paragraph('Gentile Sig.\\Sig.ra __________________________________',body_style))
@@ -347,7 +347,7 @@ def genera_privacy(request, pk, minorenne):
 
 
     text = ''
-    if(minorenne == 0):
+    if(not minorenne):
         text = 'Io sottoscritto '
     else:
         text = '''
@@ -357,7 +357,7 @@ def genera_privacy(request, pk, minorenne):
         a____________________________________ (____)
         in via_______________________________________ N° __________
         '''
-        text += 'in qualità di Genitore/Rappresentante legale di '
+        text += '<br/>in qualità di Genitore/Rappresentante legale di '
     text += f'{paz.nome} {paz.cognome}, '
     if(paz.codfisc):
         text += f'codice fiscale {paz.codfisc} '
@@ -381,7 +381,7 @@ def genera_privacy(request, pk, minorenne):
     data = datetime.date.today()
     datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
     Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
-    if (minorenne==0):
+    if (not minorenne):
         Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
     else:
         Story.append(Paragraph('Nome e cognome ____________________', body_style))
@@ -389,8 +389,7 @@ def genera_privacy(request, pk, minorenne):
     Story.append(Spacer(1,0.4*inch))
 
     Story.append(Paragraph('De Canal Marco<br/>P.Iva 04370000400<br/>Via Brescia 205/B, San Giovanni in Marignano (RN)',footer_style))
-
-    #chiusura documento
+    
     doc.build(Story)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='privacy.pdf')

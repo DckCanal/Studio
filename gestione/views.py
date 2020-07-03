@@ -45,12 +45,19 @@ def home_page(request):
 def fattura_pdf(request, pk):
     return pdfgen.genera_fattura(request,pk)
 
-def privacy_pdf(request,pk,minorenne=0):
+def privacy_pdf(request,pk):
     """Generazione modulo privacy del paziente pk"""
-    return pdfgen.genera_privacy(request,pk,minorenne)
+    return pdfgen.genera_privacy(request,pk,False)
 
-def consenso_pdf(request,pk,minorenne=0):
+def privacy_m_pdf(request,pk):
+    return pdfgen.genera_privacy(request,pk,True)
+
+def consenso_pdf(request,pk):
     """Generazione modulo consenso informato del paziente pk"""
-    return pdfgen.genera_consenso_informato(request,pk,minorenne)
+    return pdfgen.genera_consenso_informato(request,pk,False)
+
+def consenso_m_pdf(request,pk):
+    return pdfgen.genera_consenso_informato(request,pk,True)
+
 
 # da definire, la View per l'inserimento di un nuovo paziente
