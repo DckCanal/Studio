@@ -13,4 +13,6 @@ urlpatterns = [
     path('consenso-pdf/<int:pk>',views.consenso_pdf,name='consenso-pdf'),
     path('privacy-m-pdf/<int:pk>',views.privacy_m_pdf,name='privacy-m-pdf'),
     path('consenso-m-pdf/<int:pk>',views.consenso_m_pdf,name='consenso-m-pdf'),
+    path('nuovo-paziente',views.NuovoPaziente.as_view(),name='nuovo-paziente'),
+    path('nuova-fattura',views.NuovaFattura.as_view(),name='nuova-fattura'),
 ]

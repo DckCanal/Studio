@@ -1,13 +1,12 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
-# Create your models here.
 
 class Paziente(models.Model):
 	"""Classe per rappresentare il paziente."""
 	
-	cognome = models.CharField(max_length = 100, help_text = 'Cognome', blank = True)
-	nome = models.CharField(max_length = 100, help_text = 'Nome', blank = True)
+	cognome = models.CharField(max_length = 100, help_text = 'Cognome')
+	nome = models.CharField(max_length = 100, help_text = 'Nome')
 	
 	codfisc = models.CharField("Codice fiscale", max_length = 16, help_text = 'Codice fiscale', blank = True)
 	#inserire un Validator. Trovare il modo di segnalare la lunghezza fissa di 16 caratteri.

@@ -74,7 +74,9 @@ def genera_fattura(request, pk):
     Story.append(p)
     Story.append(Spacer(1, 0.7*inch))
 
-    text = f"Fattura numero {f.numero} del {f.data}"
+    data = f.data
+    datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
+    text = f"Fattura numero {f.numero} del {datastr}"
 
     p = Paragraph(text, heading_style)
     Story.append(p)

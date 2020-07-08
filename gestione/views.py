@@ -1,6 +1,8 @@
 """Modulo con le views di pazienti e fatture"""
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -70,5 +72,21 @@ def consenso_pdf(request,pk):
 def consenso_m_pdf(request,pk):
     return pdfgen.genera_consenso_informato(request,pk,True)
 
+class NuovoPaziente(LoginRequiredMixin,CreateView):
+    model = Paziente
+    fields = ['nome','cognome','codfisc','piva',
+        'paese','provincia','cap','via','civico',
+        'telefono','email','data_nascita','paese_nascita',
+        'provincia_nascita','prezzo']
+    permission_required = ['gestione.add_paziente']
 
-# da definire, la View per l'inserimento di un nuovo paziente
+#Occorre passare a questa classe un argomento che sia la PK del paziente. Il campo
+#paziente deve quindi essere oscurato ed il prezzo ricavato dal suo di default
+class NuovaFattura(LoginRequiredMixin,CreateView):
+    model = Fattura
+    fields = ['paziente','valore','data','numero']
+    permission_required = ['gestione.add_fattura']
+    nuovoNumero = 5 #definire la query
+    initial = {'valore':'50.00', 'numero':nuovoNumero}
+    #success_url = reverse_lazy(f'fattura_pdf/{nuovoNumero}')
+
