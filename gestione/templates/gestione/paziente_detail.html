@@ -4,6 +4,8 @@
 <p>Modificato il: {{paziente.ultima_modifica}}</p>
 <p>Prezzo standard: {{paziente.prezzo}}</p>
 <br /><br />
+<a href="{% url 'nuova-fattura' paziente.pk%}">Nuova fattura</a>
+<br /><br />
 <p><a href="{% url 'privacy-pdf' paziente.pk %}">Privacy</a>
 (<a href="{% url 'privacy-m-pdf' paziente.pk %}">minorenne</a>)</p>
 <p><a href="{% url 'consenso-pdf' paziente.pk %}">Consenso informato</a>
