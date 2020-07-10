@@ -2,13 +2,31 @@
 
 {% block main-content %}
 
-<h1> Benvenuto nella Home page de 'il Salice'!</h1>
 
-
-<h3>Ci sono {{num_paz}} pazienti in elenco</h3>
-
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<h1>Ultimi pazienti modificati</h1>
+</div>
+<div class="container">
 {% for p in paz %}
-    <p><a href="{{p.get_absolute_url}}">{{p}}</a> - <a href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a></p>
+{% if forloop.counter in indici %}
+<div class="card-deck mb-3 text-center">
+{% endif %}
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            <h4 class="font-weight-normal">
+            <a href="{{p.get_absolute_url}}">
+            {{p}}</a></h4>
+        </div>
+        <div class="card-body">
+            <p>Ultima modifica: {{p.ultima_modifica}}</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a></p>
+            <p><a class="btn btn-outline-primary" href="{% url 'modifica-paziente' p.pk %}">Modifica</a></p>
+        </div>
+    </div>
+{% if forloop.counter|add:"1" in indici %}
+</div>
+{% endif %}
 {% endfor %}
+</div>
 
 {% endblock main-content %}

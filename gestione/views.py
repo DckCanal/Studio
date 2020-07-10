@@ -16,9 +16,11 @@ from datetime import date
 @permission_required('gestione.view_paziente')
 def home_page(request):
     paz = Paziente.objects.all().order_by('-ultima_modifica')[:15]
+    indici = [1,4,7,10,13]
     context = {
         'num_paz': len(paz),
         'paz':paz,
+        'indici':indici,
     }
     return render(request,'gestione/home.html',context)
 
