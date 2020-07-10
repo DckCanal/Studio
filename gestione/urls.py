@@ -14,5 +14,7 @@ urlpatterns = [
     path('privacy-m-pdf/<int:pk>',views.privacy_m_pdf,name='privacy-m-pdf'),
     path('consenso-m-pdf/<int:pk>',views.consenso_m_pdf,name='consenso-m-pdf'),
     path('nuovo-paziente',views.NuovoPaziente.as_view(),name='nuovo-paziente'),
-    path('nuova-fattura/<int:pzpk>',views.nuovaFattura,name='nuova-fattura'),
+    path('modifica-paziente/<int:pk>',views.ModificaPaziente.as_view(),name='modifica-paziente'),
+    path('nuova-fattura',views.nuovaFattura,name='nuova-fattura'),
+    path('fattura-veloce/<int:pzpk>',views.fatturaVeloce,name='fattura-veloce')
 ]

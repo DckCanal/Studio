@@ -1,7 +1,3 @@
-Form
-Utenti
-Link per generazione rapida di fattura: rimane sulla pagina del paziente e permette di scaricare direttamente la fattura.pdf, con data odierna, prezzo standard e numero ordinale corretto
 Form per gestione del paziente: uno per i dati personali (modifica ed aggiunta) ed uno per la scheda, oppure uno di inserimento ed uno di modifica (entrambi con dati e scheda)?
 Inizialmente niente scheda, rimane in locale, quindi il problema si porrà successivamente.
 Aggiungere view con dati aggregati del fatturato, per settimana, mese e anno
-Rendere obbligatori alcuni campi in models.py

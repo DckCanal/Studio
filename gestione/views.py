@@ -4,15 +4,13 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.db.models import Max
 from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import pdfgen
 from gestione.forms import NuovaFatturaForm
-
-#Per limitare l'accesso ai soli utenti registrati nelle Classi, aggiungi come classe
-#da cui ereditare, prima delle altre, LoginRequiredMixin. Al loro interno puoi specificare
-#il campo login_url e redirect_field_name.
+from datetime import date
 
 @login_required
 @permission_required('gestione.view_paziente')
@@ -82,21 +80,44 @@ class NuovoPaziente(LoginRequiredMixin,CreateView):
         'provincia_nascita','prezzo']
     permission_required = ['gestione.add_paziente']
 
+class ModificaPaziente(LoginRequiredMixin,UpdateView):
+    model = Paziente
+    fields = ['nome','cognome','codfisc','piva',
+        'paese','provincia','cap','via','civico',
+        'telefono','email','data_nascita','paese_nascita',
+        'provincia_nascita','prezzo']
+    permission_required = ['gestione.add_paziente']
+
 @permission_required('gestione.add_fattura')
-def nuovaFattura(request,pzpk):
-    paz = get_object_or_404(Paziente,pk=pzpk)
-    
+def nuovaFattura(request):
     if request.method == 'POST':
         form = NuovaFatturaForm(request.POST)
-        if form.is_valid():
-            #CREAZIONE NUOVA FATTURA!
+        if form.is_valid():            
             f = Fattura()
+            f.paziente = form.cleaned_data['paziente']
+            f.valore = form.cleaned_data['valore']
+            f.data = form.cleaned_data['data']
+            f.numero = form.cleaned_data['numero']
+            f.save()
             return HttpResponseRedirect(f.get_absolute_url())
     else:
-        #Inserire il numero d'ordine calcolato!
-        form = NuovaFatturaForm(initial={'paziente':paz,'valore':paz.prezzo})
-        context = {
-            'form' : form,
-        }
+        num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
+        form = NuovaFatturaForm(initial={'valore':50.00,'numero':num})
+    context = {
+        'form' : form,
+    }
     
     return render(request,'gestione/fattura_form.html',context)
+
+@permission_required('gestione.add_fattura')
+def fatturaVeloce(request,pzpk):
+    paz = get_object_or_404(Paziente,pk=pzpk)            
+    f = Fattura()
+    f.paziente = paz
+    f.valore = paz.prezzo
+    f.data = date.today()
+    num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
+    f.numero = num
+    f.save()
+    return pdfgen.genera_fattura(request,f.pk)
+        

@@ -7,20 +7,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib import colors
-mese = {
-    1:'gennaio',
-    2:'febbraio',
-    3:'marzo',
-    4:'aprile',
-    5:'maggio',
-    6:'giugno',
-    7:'luglio',
-    8:'agosto',
-    9:'settembre',
-    10:'ottobre',
-    11:'novembre',
-    12:'dicembre'
-}
+from .utils import data_italiana
+
 styles = getSampleStyleSheet()
 
 def genera_fattura(request, pk):
@@ -74,9 +62,8 @@ def genera_fattura(request, pk):
     Story.append(p)
     Story.append(Spacer(1, 0.7*inch))
 
-    data = f.data
-    datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
-    text = f"Fattura numero {f.numero} del {datastr}"
+    data_fat = data_italiana(f.data)
+    text = f"Fattura numero {f.numero} del {data_fat}"
 
     p = Paragraph(text, heading_style)
     Story.append(p)
@@ -175,7 +162,6 @@ def genera_consenso_informato(request, pk, minorenne):
     Story.append(Paragraph('''di essere stato/a informato/a in modo
     chiaro ed esauriente da Marco De Canal massofisioterapista
     ''',body_style))
-    #Story.append(Spacer(1,0.2*inch))
 
     text = 'sul tipo di trattamento proposto: tecniche, materiali e mezzi utilizzati;'
     Story.append(Paragraph(text,body_style,'-'))
@@ -213,9 +199,8 @@ def genera_consenso_informato(request, pk, minorenne):
     Story.append(Paragraph('PERTANTO ACCONSENTO AL TRATTAMENTO',heading_style))
     Story.append(Spacer(1,0.3*inch))
 
-    data = datetime.date.today()
-    datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
-    Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
+    data = data_italiana(datetime.date.today())
+    Story.append(Paragraph(f'San Giovanni in Marignano, {data}',body_style))
     if (not minorenne):
         Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
     else:
@@ -380,9 +365,8 @@ def genera_privacy(request, pk, minorenne):
     Story.append(Paragraph(text,body_style))
     Story.append(Spacer(1, 0.2*inch))
 
-    data = datetime.date.today()
-    datastr=str(data.day)+" "+mese[data.month]+" "+str(data.year)
-    Story.append(Paragraph(f'San Giovanni in Marignano, {datastr}',body_style))
+    data = data_italiana(datetime.date.today())
+    Story.append(Paragraph(f'San Giovanni in Marignano, {data}',body_style))
     if (not minorenne):
         Story.append(Paragraph(f'{paz.nome} {paz.cognome}',body_style))
     else:

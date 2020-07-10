@@ -54,6 +54,9 @@
         <a class="nav-link" href="{% url 'nuovo-paziente' %}">Nuovo paziente <span class="sr-only"></span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'nuova-fattura' %}">Nuova fattura <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}?next={% url 'home' %}">Logout <span class="sr-only"></span></a>
       </li>
     {% else %}

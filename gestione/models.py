@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
+from .utils import data_italiana
 
 class Paziente(models.Model):
 	"""Classe per rappresentare il paziente."""
@@ -58,7 +59,7 @@ class Fattura(models.Model):
 		ordering = ['-data','-numero']
 	
 	def __str__(self):
-		return "Fattura numero " + str(self.numero) + " del " + str(self.data)
+		return "Fattura numero " + str(self.numero) + " del " + data_italiana(self.data)
 		#return "Fattura numero "+ self.numero+" intestata a "+self.paziente.cognome+" "+self.paziente.nome+" del "+self.data+", "+self.valore
 		#c'è un errore, self.paziente (ForeignKey) non ha attributo nome e cognome
 		
