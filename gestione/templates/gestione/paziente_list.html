@@ -1,6 +1,32 @@
 {% extends "generic.html" %}
 {% block main-content %}
+<style>
+    .themed-grid-col {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(86, 61, 124, .2);
+}
+
+.themed-container {
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: rgba(0, 123, 255, .15);
+  border: 1px solid rgba(0, 123, 255, .2);
+}
+
+</style>
+<div class="container">
+<h1>Pazienti</h1>
 {% for p in elenco_pazienti %}
-<hr><a href="{{p.get_absolute_url}}">{{p}}</a>
+<div class="row mb-3">
+    <div class="col-md-8 themed-grid-col"><a href="{{p.get_absolute_url}}">{{p}}</a></div>
+    <div class="col-md-4 themed-grid-col text-center">
+        <a class="btn btn-primary btn-sm" href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-paziente' p.pk %}">Modifica</a>
+    </div>
+  </div>
+  
 {% endfor %}
 {% endblock main-content %}
+</div>

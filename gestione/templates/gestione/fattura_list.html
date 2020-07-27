@@ -1,9 +1,32 @@
 {% extends "generic.html" %}
 
 {% block main-content %}
+<style>
+    .themed-grid-col {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(86, 61, 124, .2);
+}
+
+.themed-container {
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: rgba(0, 123, 255, .15);
+  border: 1px solid rgba(0, 123, 255, .2);
+}
+
+</style>
+<div class="container">
+    <h1>Fatture</h1>
 {% for f in elenco_fatture %}
-<hr><p><a href="{{f.get_absolute_url}}">{{f}}</a> - <a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></p>
-<a href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>
+<div class="row mb-3">
+    <div class="col-md-10 themed-grid-col"><a href="{{f.get_absolute_url}}">{{f}}</a> - <a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></div>
+    <div class="col-md-2 themed-grid-col text-center">
+        <a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>
+    </div>
+  </div>
 {% endfor %}
+</div>
 
 {% endblock main-content %}
