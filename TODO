@@ -1,6 +1,6 @@
 Aggiungere view con dati aggregati del fatturato, per settimana, mese e anno
 
-PazienteDetailView: aggiungere alla tabella delle fatture due colonne: valore e pagata
+PazienteDetailView: aggiungere alla tabella delle fatture 4 colonne: valore e pagata e pdf e inserimento data di pagamento
 
 FatturaDetailView: migliorarla
 
@@ -12,3 +12,9 @@ Modello fattura: aggiungere il testo con default "Trattamento massofisioterapico
  Creare un filtro nella ListView di tutte le fatture (tutte, già pagate, da pagare) [eventualmente unire in questa la view precedente]
  Differenziare i pdf: una copia per il paziente senza data di pagamento, ed una per me con scritta la data di pagamento nel caso differisca da quella odierna.
 Nuova fattura: aggiungere il testo del trattamento
+
+Paginazione pazienti
+
+Modifica fattura
+
+Fattura list view aggiungere inserimento data di pagamento

@@ -1,32 +1,51 @@
 {% extends "generic.html" %}
 
 {% block main-content %}
-<style>
-    .themed-grid-col {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(86, 61, 124, .2);
-}
-
-.themed-container {
-  padding: 15px;
-  margin-bottom: 30px;
-  background-color: rgba(0, 123, 255, .15);
-  border: 1px solid rgba(0, 123, 255, .2);
-}
-
-</style>
 <div class="container">
-    <h1>Fatture</h1>
-{% for f in elenco_fatture %}
-<div class="row mb-3">
-    <div class="col-md-10 themed-grid-col"><a href="{{f.get_absolute_url}}">{{f}}</a> - <a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></div>
-    <div class="col-md-2 themed-grid-col text-center">
-        <a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>
-    </div>
+  <h1>Fatture</h1>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Fattura</th>
+          <th>Paziente</th>
+          <th>Valore</th>
+          <th>Pagata</th>
+          <th>PDF</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in page_obj %}
+        <tr>
+          <td><a href="{{f.get_absolute_url}}">{{f}}</a></td>
+          <td><a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></td>
+          <td>{{f.valore}}</td>
+          <td>TROLL!</td>
+          <td><a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a></td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-{% endfor %}
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">avanti</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">fine &raquo;</a>
+        {% endif %}
+    </span>
 </div>
+
+
 
 {% endblock main-content %}
