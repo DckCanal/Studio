@@ -1,24 +1,80 @@
 {% extends "generic.html" %}
 {% block main-content %}
-<h2>{{paziente}}</h2>
-<p>Modificato il: {{paziente.ultima_modifica}}</p>
-<p>Prezzo standard: {{paziente.prezzo}}</p>
-<br /><br />
-<a href="{% url 'fattura-veloce' paziente.pk%}">Nuova fattura</a>
-<br /><br />
-<p><a href="{% url 'privacy-pdf' paziente.pk %}">Privacy</a>
-(<a href="{% url 'privacy-m-pdf' paziente.pk %}">minorenne</a>)</p>
-<p><a href="{% url 'consenso-pdf' paziente.pk %}">Consenso informato</a>
-(<a href="{% url 'consenso-m-pdf' paziente.pk %}">minorenne</a>)</p>
-<br /><br />
-<p><a href="{% url 'modifica-paziente' paziente.pk %}">Modifica</a></p>
-{% if paziente.fattura_set.all %}
-<ul>
-    {% for f in paziente.fattura_set.all %}
-    <hr><li><a href="{{ f.get_absolute_url }}">{{f}}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>nessuna fattura intestata al paziente</p>
-{% endif %}
+<style>
+    .themed-container {
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: rgba(0, 123, 255, .15);
+  border: 1px solid rgba(0, 123, 255, .2);
+}
+</style>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-8">
+        <h2>{{paziente}}</h2>
+        </div>
+        <div class="col-md-4 text-right">
+        <a class="btn btn-primary" href="{% url 'fattura-veloce' paziente.pk%}">Nuova fattura</a>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+    <div class="col-md-8">
+        <h4>Dati personali</h4>
+        {% if paziente.codfisc %}
+            <p>Codice fiscale: {{paziente.codfisc}}</p>
+        {% endif %}
+        {% if paziente.piva %}
+            <p>Partita IVA: {{paziente.piva}}</p>
+        {% endif %}
+        {% if paziente.telefono %}
+            <p>Telefono: {{paziente.telefono}}</p>
+        {% endif %}
+        {% if paziente.email %}
+            <p>email: {{paziente.email}}</p>
+        {% endif %}
+        {% if paziente.paese and paziente.cap and paziente.via and paziente.civico and paziente.provincia %}
+            <p>Residente in {{paziente.via}} {{paziente.civico}}, {{paziente.cap}}, {{paziente.paese}} ({{paziente.provincia}})</p>
+        {% endif %}
+        {% if paziente.data_nascita and paziente.paese_nascita and paziente.provincia_nascita %}
+            <p>Nato/a a {{paziente.paese_nascita}} ({{paziente.provincia_nascita}}) il {{paziente.data_nascita}}</p>
+        {% endif %}
+        {% if paziente.prezzo %}
+            <p>Prezzo: {{paziente.prezzo}}</p>
+        {% endif %}
+        <p>Modificato il: {{paziente.ultima_modifica}}</p>
+        
+        <div>
+            <a class="btn btn-outline-primary" href="{% url 'modifica-paziente' paziente.pk %}">Modifica</a>
+        </div>
+    </div>
+    <div class="col-md-4 text-right">
+        <h4>Generazione documenti</h4>
+        <p><a href="{% url 'privacy-pdf' paziente.pk %}">Privacy</a>
+        (<a href="{% url 'privacy-m-pdf' paziente.pk %}">minorenne</a>)</p>
+        <p><a href="{% url 'consenso-pdf' paziente.pk %}">Consenso informato</a>
+        (<a href="{% url 'consenso-m-pdf' paziente.pk %}">minorenne</a>)</p>
+    </div>
+    </div>
+    
+
+        
+        
+
+    <div>
+        <h3>Fatture</h3>
+    {% if paziente.fattura_set.all %}
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <tbody>
+        {% for f in paziente.fattura_set.all %}
+        <tr><td><a href="{{ f.get_absolute_url }}">{{f}}</a></td></tr>
+        {% endfor %}
+    {% else %}
+    <tr><td>Nessuna fattura intestata al paziente</td></tr>
+    {% endif %}
+</tbody>
+</table>
+    </div>
+</div>
 {% endblock main-content %}
