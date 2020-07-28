@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.home_page, name='home'),
     path('pazienti/',views.PazienteListView.as_view(),name='pazienti'),
     path('fatture/', views.FatturaListView.as_view(), name='fatture'),
+    path('fattura-non-incassate/',views.FatturaNonIncassataListView.as_view(), name='fatture-non-incassate'),
     path('fattura/<int:pk>', views.FatturaDetailView.as_view(), name='dettaglio-fattura'),
     path('paziente/<int:pk>', views.PazienteDetailView.as_view(), name='dettaglio-paziente'),
     path('fattura-pdf/<int:pk>',views.fattura_pdf,name='fattura-pdf'),

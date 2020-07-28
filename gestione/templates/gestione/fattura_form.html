@@ -1,11 +1,16 @@
 {% extends "generic.html" %}
 {% block main-content %}
+<div class="container">
+{% if fattura.paziente %}
+    <h2>{{fattura.paziente}}</h2>
+{% endif %}
 <form action="" method="post">
 {% csrf_token %}
 <table>
 {{form.as_table}}
 </table>
-<input type="submit" value="Inserisci" />
+<input type="submit" class="btn btn-primary btn-md" value="Inserisci" />
 </form>
+</div>
 
 {% endblock main-content %}

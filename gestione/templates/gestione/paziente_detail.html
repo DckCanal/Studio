@@ -83,7 +83,7 @@
             <td class="text-center">
                 <a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>                
                 <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-fattura' f.id %}">Modifica</a>
-                {% if not fattura.data_incasso %}
+                {% if not f.data_incasso %}
                 <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' f.id %}">Incassa oggi</a>
                 {% endif %}
             </td>

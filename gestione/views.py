@@ -47,6 +47,15 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'elenco_fatture'
     permission_required = ('gestione.view_fattura','gestione.delete_fattura','gestione.view_paziente')
 
+class FatturaNonIncassataListView(LoginRequiredMixin, generic.ListView):
+    """Vista di elenco delle fatture non ancora pagate"""
+    model = Fattura
+    paginate_by = 25
+    template_name = 'fattura_list.html'
+    permission_required = ('gestione.view_fattura','gestione.delete_fattura','gestione.view_paziente')
+    def get_queryset(self):
+        return Fattura.objects.filter(data_incasso=None)
+
 
 class FatturaDetailView(LoginRequiredMixin, generic.DetailView):
     """Vista di dettaglio della fattura, ovvero il file da stampare"""
@@ -107,6 +116,7 @@ def nuovaFattura(request):
             f.valore = form.cleaned_data['valore']
             f.data = form.cleaned_data['data']
             f.numero = form.cleaned_data['numero']
+            f.data_incasso = form.cleaned_data['data_incasso']
             f.save()
             return HttpResponseRedirect(f.get_absolute_url())
     else:

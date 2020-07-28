@@ -2,7 +2,14 @@
 
 {% block main-content %}
 <div class="container">
-  <h1>Fatture</h1>
+<div class="row mb-3">
+  <div class="col-md-8"><h1>Fatture</h1></div>
+  <div class="col-md-4">
+    <a class="btn btn-primary btn-sm" href="{% url 'fatture' %}">Tutte</a>
+    <a class="btn btn-outline-primary btn-sm" href="{% url 'fatture-non-incassate' %}">Da incassare</a>
+  </div>
+</div>
+
   <div class="table-responsive">
     <table class="table table-striped table-sm">
       <thead>
@@ -23,7 +30,7 @@
           <td>{{f.data_incasso}}</td>
           <td class="text-center"><a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>
           <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-fattura' f.id %}">Modifica</a>
-          {% if not fattura.data_incasso %}
+          {% if not f.data_incasso %}
           <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' f.id %}">Incassa oggi</a>
           {% endif %}
         </td>
