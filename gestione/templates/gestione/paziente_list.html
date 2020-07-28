@@ -18,7 +18,7 @@
 </style>
 <div class="container">
 <h1>Pazienti</h1>
-{% for p in elenco_pazienti %}
+{% for p in page_obj %}
 <div class="row mb-3">
     <div class="col-md-8 themed-grid-col"><a href="{{p.get_absolute_url}}">{{p}}</a></div>
     <div class="col-md-4 themed-grid-col text-center">
@@ -28,5 +28,22 @@
   </div>
   
 {% endfor %}
+<div class="pagination">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">avanti</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">fine &raquo;</a>
+      {% endif %}
+  </span>
+</div>
 </div>
 {% endblock main-content %}

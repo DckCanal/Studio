@@ -16,5 +16,7 @@ urlpatterns = [
     path('nuovo-paziente',views.NuovoPaziente.as_view(),name='nuovo-paziente'),
     path('modifica-paziente/<int:pk>',views.ModificaPaziente.as_view(),name='modifica-paziente'),
     path('nuova-fattura',views.nuovaFattura,name='nuova-fattura'),
-    path('fattura-veloce/<int:pzpk>',views.fatturaVeloce,name='fattura-veloce')
+    path('fattura-veloce/<int:pzpk>',views.fatturaVeloce,name='fattura-veloce'),
+    path('modifica-fattura/<int:pk>',views.ModificaFattura.as_view(),name='modifica-fattura'),
+    path('incassa-fattura/<int:pk>',views.incassaOggi,name='incassa-oggi'),
 ]

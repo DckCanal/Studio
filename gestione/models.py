@@ -50,18 +50,17 @@ class Fattura(models.Model):
 	
 	paziente = models.ForeignKey(Paziente, on_delete = models.SET_NULL, null = True, help_text = 'Intestatario (Paziente)')
 	valore = models.DecimalField(help_text = 'Valore', max_digits = 8, decimal_places = 2)
-	data = models.DateField(default = date.today, help_text = 'Data <em>YYYY-MM-DD</em>.')
+	data = models.DateField(default = date.today, help_text = 'Data <em>AAAA-MM-GG</em>.')
+	data_incasso = models.DateField(help_text='Data di incasso <em>AAAA-MM-GG</em>',null=True,blank=True)
+	testo = models.CharField(max_length=300,help_text='Servizio eseguito',default='Trattamento massoterapico')
 	
 	numero = models.PositiveSmallIntegerField('Numero d\'ordine', help_text = 'Numero d\'ordine')
-	#inserire di default il numero più grande +1 dell'anno corrente, chissà come si fa...
 	
 	class Meta:
 		ordering = ['-data','-numero']
 	
 	def __str__(self):
 		return str(self.numero) + " - " + data_italiana(self.data)
-		#return "Fattura numero "+ self.numero+" intestata a "+self.paziente.cognome+" "+self.paziente.nome+" del "+self.data+", "+self.valore
-		#c'è un errore, self.paziente (ForeignKey) non ha attributo nome e cognome
 		
 	def get_absolute_url(self):
 		return reverse('dettaglio-fattura', args=[str(self.id)])

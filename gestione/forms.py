@@ -6,7 +6,7 @@ from datetime import date
 class NuovaFatturaForm(ModelForm):
     class Meta:
         model = Fattura
-        fields = ['paziente','valore','data','numero']
+        fields = ['paziente','valore','data','numero','data_incasso','testo']
         
         
     def clean_data(self):

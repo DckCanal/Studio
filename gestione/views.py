@@ -28,6 +28,7 @@ class PazienteListView(LoginRequiredMixin, generic.ListView):
     """View di elenco dei pazienti, home page del sito"""
     model = Paziente
     context_object_name = 'elenco_pazienti'
+    paginate_by=25
     permission_required = ('gestione.view_paziente','gestione.delete_paziente')
 
 
@@ -91,6 +92,11 @@ class ModificaPaziente(LoginRequiredMixin,UpdateView):
         'provincia_nascita','prezzo']
     permission_required = ['gestione.add_paziente']
 
+class ModificaFattura(LoginRequiredMixin,UpdateView):
+    model = Fattura
+    fields = ['valore','data','numero','data_incasso','testo']
+    permission_required = ['gestione.add_fattura']
+
 @permission_required('gestione.add_fattura')
 def nuovaFattura(request):
     if request.method == 'POST':
@@ -119,8 +125,15 @@ def fatturaVeloce(request,pzpk):
     f.paziente = paz
     f.valore = paz.prezzo
     f.data = date.today()
+    f.data_incasso = date.today()
     num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
     f.numero = num
     f.save()
     return pdfgen.genera_fattura(request,f.pk)
         
+@permission_required('gestione.add_fattura')
+def incassaOggi(request,pk):
+    f = get_object_or_404(Fattura,pk=pk)
+    f.data_incasso = date.today()
+    f.save()
+    return HttpResponseRedirect(f.get_absolute_url())

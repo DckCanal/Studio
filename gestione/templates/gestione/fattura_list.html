@@ -11,7 +11,7 @@
           <th>Paziente</th>
           <th>Valore</th>
           <th>Pagata</th>
-          <th>PDF</th>
+          <th class="text-center">Azioni</th>
         </tr>
       </thead>
       <tbody>
@@ -20,8 +20,13 @@
           <td><a href="{{f.get_absolute_url}}">{{f}}</a></td>
           <td><a href="{{f.paziente.get_absolute_url}}">{{f.paziente}}</a></td>
           <td>{{f.valore}}</td>
-          <td>TROLL!</td>
-          <td><a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a></td>
+          <td>{{f.data_incasso}}</td>
+          <td class="text-center"><a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' f.id %}">Scarica pdf</a>
+          <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-fattura' f.id %}">Modifica</a>
+          {% if not fattura.data_incasso %}
+          <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' f.id %}">Incassa oggi</a>
+          {% endif %}
+        </td>
         </tr>
 
         {% endfor %}
@@ -44,6 +49,7 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">fine &raquo;</a>
         {% endif %}
     </span>
+</div>
 </div>
 
 

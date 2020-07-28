@@ -2,6 +2,18 @@
 {% block main-content %}
     <hr>
     {{fattura}}
+
+    <p>Valore: {{fattura.valore}}</p>
+    <p>Paziente: {{fattura.paziente}}</p>
+    <p>Numero: {{fattura.numero}}</p>
+    <p>Testo: {{fattura.testo}}</p>
+    <p>Data: {{fattura.data}}</p>
+    <p>Data incasso: {{fattura.data_incasso}}</p>
+    <hr>
     <a href="{{fattura.paziente.get_absolute_url}}">{{fattura.paziente}}</a><br/>
     <a href="{% url 'fattura-pdf' fattura.id %}">Stampa pdf</a>
+    <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-fattura' fattura.id %}">Modifica</a>
+    {% if not fattura.data_incasso %}
+    <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' fattura.id %}">Incassa oggi</a>
+    {% endif %}
 {% endblock main-content %} 
