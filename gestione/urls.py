@@ -9,7 +9,8 @@ urlpatterns = [
     path('fattura-non-incassate/',views.FatturaNonIncassataListView.as_view(), name='fatture-non-incassate'),
     path('fattura/<int:pk>', views.FatturaDetailView.as_view(), name='dettaglio-fattura'),
     path('paziente/<int:pk>', views.PazienteDetailView.as_view(), name='dettaglio-paziente'),
-    path('fattura-pdf/<int:pk>',views.fattura_pdf,name='fattura-pdf'),
+    path('fattura-pdf/<int:pk>',views.fattura_pdf,{'per_cliente':True},name='fattura-pdf'),
+    path('fattura-pdf-commercialista/<int:pk>',views.fattura_pdf, {'per_cliente':False}, name='fattura-pdf-commercialista'),
     path('privacy-pdf/<int:pk>>',views.privacy_pdf,name='privacy-pdf'),
     path('consenso-pdf/<int:pk>',views.consenso_pdf,name='consenso-pdf'),
     path('privacy-m-pdf/<int:pk>',views.privacy_m_pdf,name='privacy-m-pdf'),
@@ -20,4 +21,5 @@ urlpatterns = [
     path('fattura-veloce/<int:pzpk>',views.fatturaVeloce,name='fattura-veloce'),
     path('modifica-fattura/<int:pk>',views.ModificaFattura.as_view(),name='modifica-fattura'),
     path('incassa-fattura/<int:pk>',views.incassaOggi,name='incassa-oggi'),
+    path('elimina-fattura/<int:pk>',views.FatturaDelete.as_view(),name='elimina-fattura'),
 ]

@@ -64,8 +64,8 @@ class FatturaDetailView(LoginRequiredMixin, generic.DetailView):
     permission_required = ('gestione.view_fattura','gestione.delete_fattura','view.change_fattura','gestione.view_paziente')
 
 @login_required
-def fattura_pdf(request, pk):
-    return pdfgen.genera_fattura(request,pk)
+def fattura_pdf(request, pk, per_cliente):
+    return pdfgen.genera_fattura(request,pk,per_cliente)
 
 @login_required
 def privacy_pdf(request,pk):
@@ -147,3 +147,8 @@ def incassaOggi(request,pk):
     f.data_incasso = date.today()
     f.save()
     return HttpResponseRedirect(f.get_absolute_url())
+
+class FatturaDelete(LoginRequiredMixin, DeleteView):
+    model = Fattura
+    success_url = reverse_lazy('fatture')
+    permission_required = ['gestione.delete_fattura']

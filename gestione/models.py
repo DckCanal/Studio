@@ -70,3 +70,10 @@ class Fattura(models.Model):
 	
 	def get_month(self):
 	    return self.data.month
+	
+	def date_diverse(self):
+		if self.data != self.data_incasso:
+			return True
+		else:
+			return False
+

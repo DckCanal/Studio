@@ -11,7 +11,7 @@ from .utils import data_italiana
 
 styles = getSampleStyleSheet()
 
-def genera_fattura(request, pk):
+def genera_fattura(request, pk, per_cliente):
     title_style=ParagraphStyle('title',parent=styles['Normal'],fontName='Helvetica',fontSize=21, leading=25)#,spaceAfter=15)    
     subtitle_style=ParagraphStyle('subtitle',parent=styles['Normal'],fontName='Helvetica',fontSize=18, leading=23)#,spaceAfter=25)
     info_style=ParagraphStyle('info',parent=styles['Normal'],fontName='Helvetica',fontSize=12,leading=15)
@@ -82,8 +82,16 @@ def genera_fattura(request, pk):
         ('ALIGN',(1,0),(1,2),'CENTER')
     ]))
     Story.append(t)
-    Story.append(Spacer(1, 1*inch))
+    
 
+    if not per_cliente and f.data != f.data_incasso:
+        Story.append(Spacer(1,0.2*inch))
+        if f.data_incasso:
+            data_incasso = data_italiana(f.data_incasso)
+            Story.append(Paragraph(f'Pagata il {data_incasso}',info_style))
+        else:
+            Story.append(Paragraph('Non ancora pagata',info_style))
+    Story.append(Spacer(1, 1*inch))
     text = '''
         Operazione senza applicazione dell’Iva ai sensi Legge
         190 del 23/12/2014 art. 1, commi da 54 a 89.<br/><br/>

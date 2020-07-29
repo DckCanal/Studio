@@ -19,8 +19,9 @@ class NuovaFatturaForm(ModelForm):
     def clean_numero(self):
         '''Numero non esistente nell'anno corrente'''
         data = self.cleaned_data['numero']
-        if Fattura.objects.filter(data__year=self.cleaned_data['data'].year).filter(numero__exact=data):
-            raise ValidationError('Numero d\'ordine già presente')
+        f = Fattura.objects.filter(data__year=self.cleaned_data['data'].year).filter(numero__exact=data)
+        if f:
+            raise ValidationError(f'Numero d\'ordine già presente:{f[0]} a {f[0].paziente}')
         return data
 
     def clean_valore(self):
