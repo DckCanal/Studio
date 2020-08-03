@@ -139,7 +139,7 @@ def fatturaVeloce(request,pzpk):
     num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
     f.numero = num
     f.save()
-    return pdfgen.genera_fattura(request,f.pk)
+    return pdfgen.genera_fattura(request,f.pk,True)
         
 @permission_required('gestione.add_fattura')
 def incassaOggi(request,pk):
