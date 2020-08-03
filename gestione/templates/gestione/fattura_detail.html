@@ -9,6 +9,10 @@
         {% if not fattura.data_incasso %}
         <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' fattura.id %}">Incassa oggi</a>
         {% endif %}
+        {% if fattura.date_diverse %}
+          <a class="btn btn-outline-primary btn-sm" href="{% url 'fattura-pdf-commercialista' fattura.id %}">PDF commercialista</a>
+        {% endif %}
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'elimina-fattura' fattura.id %}">Elimina</a>
     </div>
     </div>
     

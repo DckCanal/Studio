@@ -8,7 +8,7 @@ from django.db.models import Max
 from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from . import pdfgen
+from . import docgen
 from gestione.forms import NuovaFatturaForm
 from datetime import date
 
@@ -65,25 +65,25 @@ class FatturaDetailView(LoginRequiredMixin, generic.DetailView):
 
 @login_required
 def fattura_pdf(request, pk, per_cliente):
-    return pdfgen.genera_fattura(request,pk,per_cliente)
-
+    #return docgen.genera_fattura(request,pk,per_cliente)
+    return docgen.genera_fattura(request,pk,per_cliente)
 @login_required
 def privacy_pdf(request,pk):
     """Generazione modulo privacy del paziente pk"""
-    return pdfgen.genera_privacy(request,pk,False)
+    return docgen.genera_privacy(request,pk,False)
 
 @login_required
 def privacy_m_pdf(request,pk):
-    return pdfgen.genera_privacy(request,pk,True)
+    return docgen.genera_privacy(request,pk,True)
 
 @login_required
 def consenso_pdf(request,pk):
     """Generazione modulo consenso informato del paziente pk"""
-    return pdfgen.genera_consenso_informato(request,pk,False)
+    return docgen.genera_consenso_informato(request,pk,False)
 
 @login_required
 def consenso_m_pdf(request,pk):
-    return pdfgen.genera_consenso_informato(request,pk,True)
+    return docgen.genera_consenso_informato(request,pk,True)
 
 class NuovoPaziente(LoginRequiredMixin,CreateView):
     model = Paziente
@@ -139,7 +139,7 @@ def fatturaVeloce(request,pzpk):
     num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
     f.numero = num
     f.save()
-    return pdfgen.genera_fattura(request,f.pk)
+    return docgen.genera_fattura(request,f.pk, True)
         
 @permission_required('gestione.add_fattura')
 def incassaOggi(request,pk):
