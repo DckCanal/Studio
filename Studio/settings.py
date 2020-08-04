@@ -22,13 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '3g5b*q=p(uym@^!q!$8%x4_ruprd!ez^k0!cp_6v#twxt-aatb'
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','3g5b*q=p(uym@^!q!$8%x4_ruprd!ez^k0!cp_6v#twxt-aatb')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['ilsalice.herokuapp.com','127.0.0.1']
 
 
 # Application definition
