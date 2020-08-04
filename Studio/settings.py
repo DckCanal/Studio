@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','')
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['ilsalice.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['ilsalice.herokuapp.com','127.0.0.1','0.0.0.0']
 
 
 # Application definition
@@ -126,8 +126,9 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL='/'
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+if os.environ.get('DATABASE_URL'):
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
