@@ -2,15 +2,24 @@ asgiref==3.2.10
 astroid==2.4.2
 dj-database-url==0.5.0
 Django==3.0.8
+<<<<<<< HEAD
+=======
+et-xmlfile==1.0.1
+>>>>>>> 5a121d4112c76d10410578a0e312f6baa9e1316c
 gunicorn==20.0.4
 isort==4.3.21
+jdcal==1.4.1
 lazy-object-proxy==1.4.3
+lxml==4.5.2
 mccabe==0.6.1
+openpyxl==3.0.4
 Pillow==7.2.0
 psycopg2-binary==2.7.7
 pylint==2.5.3
+python-docx==0.8.10
 pytz==2020.1
 reportlab==3.5.46
+rope==0.17.0
 six==1.15.0
 sqlparse==0.3.1
 toml==0.10.1
