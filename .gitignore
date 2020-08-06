@@ -1,5 +1,5 @@
-Studio/__pycache__/
-gestione/__pycache__/
+*/__pycache__/
 .vscode/
+gestione/migrations/__pycache__/
 *.sqlite3
 .env
