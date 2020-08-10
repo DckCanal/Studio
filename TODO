@@ -1,9 +1,14 @@
 Aggiungere view con dati aggregati del fatturato, per settimana, mese e anno
 
 Modifica fattura CONTROLLO SU NUMERO D'ORDINE!
+    In realtà nella modifica è meglio avere il pieno controllo.
+    Aggiungere delle funzionalità di controllo in una specifica view: 
+        - numeri d'ordine ripetuti
+        - numeri d'ordine mancanti
+        - pazienti senza codice fiscale né partita iva
+        - fatture incassate prima di averle emesse
+        - ...
 
 Calendario per i campi data
 
 Migliorare i form
-
-date formato italiano

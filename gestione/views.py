@@ -140,6 +140,7 @@ def fatturaVeloce(request,pzpk):
     f.numero = num
     f.save()
     return docgen.genera_fattura(request,f.pk, True)
+
         
 @permission_required('gestione.add_fattura')
 def incassaOggi(request,pk):
@@ -152,3 +153,5 @@ class FatturaDelete(LoginRequiredMixin, DeleteView):
     model = Fattura
     success_url = reverse_lazy('fatture')
     permission_required = ['gestione.delete_fattura']
+
+
