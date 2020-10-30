@@ -120,7 +120,11 @@ def nuovaFattura(request):
             f.save()
             return HttpResponseRedirect(f.get_absolute_url())
     else:
-        num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
+        num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']
+        if num is not None:
+            num = num + 1
+        else:
+            num = 1
         form = NuovaFatturaForm(initial={'valore':50.00,'numero':num})
     context = {
         'form' : form,
@@ -136,7 +140,11 @@ def fatturaVeloce(request,pzpk):
     f.valore = paz.prezzo
     f.data = date.today()
     f.data_incasso = date.today()
-    num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']+1
+    num = Fattura.objects.filter(data__year=date.today().year).aggregate(Max('numero'))['numero__max']
+    if num is not None:
+        num = num + 1
+    else:
+        num = 1
     f.numero = num
     f.save()
     return docgen.genera_fattura(request,f.pk, True)
