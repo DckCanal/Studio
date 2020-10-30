@@ -162,4 +162,9 @@ class FatturaDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('fatture')
     permission_required = ['gestione.delete_fattura']
 
+class PazienteDelete(LoginRequiredMixin, DeleteView):
+    model = Paziente
+    success_url = reverse_lazy('pazienti')
+    permission_required = ['gestione.delete_paziente']
+
 

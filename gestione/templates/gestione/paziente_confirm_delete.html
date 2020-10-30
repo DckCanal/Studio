@@ -1,0 +1,12 @@
+{% extends 'generic.html' %}
+{% block main-content %}
+    <div class="container text-center">
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                Confermare cancellazione del paziente {{paziente}}?
+            </p>
+            <input type="submit" value="Conferma" class = "btn btn-lg btn-primary">
+        </form>
+    </div>
+{% endblock main-content %}
