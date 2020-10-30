@@ -4,7 +4,7 @@
     <div class="row mb-3">
     <div class="col-md-8"><h2>Fattura {{fattura.numero}}/{{fattura.get_year}}</h2></div>
     <div class="col-md-4">
-        <a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' fattura.id %}">PDF</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'fattura-pdf' fattura.id %}">Download</a>
         <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-fattura' fattura.id %}">Modifica</a>
         {% if not fattura.data_incasso %}
         <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' fattura.id %}">Incassa oggi</a>
