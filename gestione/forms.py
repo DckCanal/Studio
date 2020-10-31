@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from datetime import date
 
 class NuovoPazienteForm(ModelForm):
-    data_nascita = forms.DateField(input_formats=['%d/%m/%Y'])
+    data_nascita = forms.DateField(input_formats=['%d/%m/%Y'], required=False)
     class Meta:
         model = Paziente
         fields = ['nome','cognome','codfisc','piva',
@@ -15,7 +15,7 @@ class NuovoPazienteForm(ModelForm):
 
 class NuovaFatturaForm(ModelForm):
     data = forms.DateField(input_formats=['%d/%m/%Y'])
-    data_incasso = forms.DateField(input_formats=['%d/%m/%Y'])
+    data_incasso = forms.DateField(input_formats=['%d/%m/%Y'], required=False)
     class Meta:
         model = Fattura
         fields = ['paziente','valore','data','numero','data_incasso','testo']
