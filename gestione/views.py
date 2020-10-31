@@ -9,7 +9,7 @@ from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import docgen
-from gestione.forms import NuovaFatturaForm
+from gestione.forms import NuovaFatturaForm, NuovoPazienteForm
 from datetime import date
 
 @login_required
@@ -87,11 +87,8 @@ def consenso_m_pdf(request,pk):
 
 class NuovoPaziente(LoginRequiredMixin,CreateView):
     model = Paziente
-    fields = ['nome','cognome','codfisc','piva',
-        'paese','provincia','cap','via','civico',
-        'telefono','email','data_nascita','paese_nascita',
-        'provincia_nascita','prezzo']
     permission_required = ['gestione.add_paziente']
+    form_class = NuovoPazienteForm
 
 class ModificaPaziente(LoginRequiredMixin,UpdateView):
     model = Paziente

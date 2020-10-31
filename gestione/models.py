@@ -27,7 +27,7 @@ class Paziente(models.Model):
 	telefono = models.CharField(max_length = 25, help_text = 'Telefono', blank = True)
 	email = models.EmailField(help_text = 'email', blank = True)
 	
-	data_nascita  = models.DateField('Data di nascita', help_text = 'Data di nascita <em>YYYY-MM-DD</em>.', blank = True, null=True)
+	data_nascita  = models.DateField('Data di nascita', help_text = '', blank = True, null=True)
 	
 	paese_nascita = models.CharField('Città di nascita', max_length = 100, help_text = 'Città di nascita', blank = True)
 	provincia_nascita = models.CharField('Provincia di nascita',max_length = 2, help_text = 'Prov. di nascita', blank = True)
@@ -50,8 +50,8 @@ class Fattura(models.Model):
 	
 	paziente = models.ForeignKey(Paziente, on_delete = models.SET_NULL, null = True, help_text = 'Intestatario (Paziente)')
 	valore = models.DecimalField(help_text = 'Valore', max_digits = 8, decimal_places = 2)
-	data = models.DateField(default = date.today, help_text = 'Data <em>AAAA-MM-GG</em>.')
-	data_incasso = models.DateField(help_text='Data di incasso <em>AAAA-MM-GG</em>',null=True,blank=True)
+	data = models.DateField(default = date.today, help_text = '')
+	data_incasso = models.DateField(help_text='',null=True,blank=True)
 	testo = models.CharField(max_length=300,help_text='Servizio eseguito',default='Trattamento massoterapico')
 	
 	numero = models.PositiveSmallIntegerField('Numero d\'ordine', help_text = 'Numero d\'ordine')
