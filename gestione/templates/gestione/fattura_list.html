@@ -10,6 +10,28 @@
   </div>
 </div>
 
+<!-- Form per la selezione dell'anno della fattura -->
+<div class="row mb-3">
+  <form action="{% url 'fatture' %}" method="GET">
+    <label>Anno
+      <select name="anno">
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+      </select>
+    </label>
+    <label>incasso
+      <select name="stato-incasso">
+        <option value="tutte">Tutte</option>
+        <option value="incassate">Incassate</option>
+        <option value="da-incassare">Da incassare</option>
+      </select>
+
+    </label>
+    <input type="submit" value="Filtra">
+  </form>
+</div>
+
   <div class="table-responsive">
     <table class="table table-striped table-sm">
       <thead>
