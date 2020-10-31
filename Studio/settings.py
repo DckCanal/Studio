@@ -31,7 +31,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ALLOWED_HOSTS = ['ilsalice.herokuapp.com','127.0.0.1','0.0.0.0']
 
 SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT','') != 'False'
-SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_SECONDS = 1800
 
 
 # Application definition
