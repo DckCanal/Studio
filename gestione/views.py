@@ -46,6 +46,18 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
     paginate_by=25
     context_object_name = 'elenco_fatture'
     permission_required = ('gestione.view_fattura','gestione.delete_fattura','gestione.view_paziente')
+    def get_queryset(self):
+        anno = self.request.GET.get('anno',2020)
+        qs = Fattura.objects.filter(data__year=anno)
+
+        incasso = self.request.GET.get('stato-incasso','tutte')
+
+        if incasso == 'incassate':
+            return qs.filter(data_incasso__isnull=False)
+        elif incasso == 'da-incassare':
+            return qs.filter(data_incasso__isnull=True)
+
+        return qs
 
 class FatturaNonIncassataListView(LoginRequiredMixin, generic.ListView):
     """Vista di elenco delle fatture non ancora pagate"""
