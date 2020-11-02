@@ -48,9 +48,13 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
     permission_required = ('gestione.view_fattura','gestione.delete_fattura','gestione.view_paziente')
     def get_queryset(self):
         qs = Fattura.objects.all()
-        anno = self.request.GET.get('anno',2020)
-        if anno != 'Tutti':
-            qs = Fattura.objects.filter(data__year=anno)
+        anno = self.request.GET.get('anno','0')
+        mese = self.request.GET.get('mese','0')
+        if anno != '0':
+            qs = qs.filter(data__year=anno)
+
+        if mese != '0':
+            qs = qs.filter(data__month=mese)
 
         incasso = self.request.GET.get('stato-incasso','tutte')
 
@@ -72,8 +76,10 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
 
         context['anni']=years
 
-        if self.request.GET.get('anno') and self.request.GET.get('anno') != 'Tutti':
+        if self.request.GET.get('anno'):# and self.request.GET.get('anno') != '0':
             context['anno_selezionato'] = int(self.request.GET.get('anno'))
+        if self.request.GET.get('mese'):# and self.request.GET.get('mese') != '0':
+            context['mese_selezionato'] = int(self.request.GET.get('mese'))
         if self.request.GET.get('stato-incasso'):
             context['stato_incasso_selezionato'] = self.request.GET.get('stato-incasso')
 

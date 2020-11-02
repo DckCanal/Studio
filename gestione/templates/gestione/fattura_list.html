@@ -17,12 +17,33 @@
               <label class="input-group-text" for="anno">Anno</label>
             </div>               
                 <select class="custom-select" name="anno" id="anno">
-                  <option>Tutti</option>
+                  <option value="0"{% if anno_selezionato == 0 %} selected{% endif %}>Tutti</option>
                   {% if anni %}
                     {% for y in anni %}
                       <option value="{{y}}"{% if anno_selezionato == y %} selected{% endif %}>{{y}}</option>
                     {% endfor %}                    
                   {% endif %}
+                </select>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="mese">Mese</label>
+                </div> 
+                <select class="custom-select" id="mese" name="mese">
+                  <option value="0"{% if mese_selezionato == 0 %} selected{% endif %}>Tutti</option>
+                  <option value="1"{% if mese_selezionato == 1 %} selected{% endif %}>Gennaio</option>
+                  <option value="2"{% if mese_selezionato == 2 %} selected{% endif %}>Febbraio</option>
+                  <option value="3"{% if mese_selezionato == 3 %} selected{% endif %}>Marzo</option>
+                  <option value="4"{% if mese_selezionato == 4 %} selected{% endif %}>Aprile</option>
+                  <option value="5"{% if mese_selezionato == 5 %} selected{% endif %}>Maggio</option>
+                  <option value="6"{% if mese_selezionato == 6 %} selected{% endif %}>Giugno</option>
+                  <option value="7"{% if mese_selezionato == 7 %} selected{% endif %}>Luglio</option>
+                  <option value="8"{% if mese_selezionato == 8 %} selected{% endif %}>Agosto</option>
+                  <option value="9"{% if mese_selezionato == 9 %} selected{% endif %}>Settembre</option>
+                  <option value="10"{% if mese_selezionato == 10 %} selected{% endif %}>Ottobre</option>
+                  <option value="11"{% if mese_selezionato == 11 %} selected{% endif %}>Novembre</option>
+                  <option value="12"{% if mese_selezionato == 12 %} selected{% endif %}>Dicembre</option>                
                 </select>
               </div>
               <div class="input-group mb-3">
