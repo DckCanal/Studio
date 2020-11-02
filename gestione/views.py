@@ -60,9 +60,9 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
         incasso = self.request.GET.get('stato-incasso','tutte')
 
         if incasso == 'incassate':
-            return qs.filter(data_incasso__isnull=False)
+            qs = qs.filter(data_incasso__isnull=False)
         elif incasso == 'da-incassare':
-            return qs.filter(data_incasso__isnull=True)
+            qs = qs.filter(data_incasso__isnull=True)
 
         if paziente != '' and ', PK:' in paziente:
             qs = qs.filter(paziente=paziente.split(', PK:')[1])
