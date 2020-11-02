@@ -134,7 +134,8 @@ TIME_ZONE = 'Europe/Rome'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
 
 USE_TZ = True
 
@@ -151,3 +152,4 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 django_heroku.settings(locals())
+

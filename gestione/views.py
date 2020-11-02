@@ -9,7 +9,7 @@ from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import docgen
-from gestione.forms import NuovaFatturaForm, NuovoPazienteForm
+from gestione.forms import NuovaFatturaForm, NuovoPazienteForm, ModificaFatturaForm
 from datetime import date
 
 @login_required
@@ -88,19 +88,6 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
         if self.request.GET.get('paziente')  and ', PK:' in self.request.GET.get('paziente'):
             context['paziente_selezionato'] = self.request.GET.get('paziente').split(', PK:')[0]
         return context
-    
-    
-
-#class FatturaNonIncassataListView(LoginRequiredMixin, generic.ListView):
-#    pass
-#    """Vista di elenco delle fatture non ancora pagate"""
-#    model = Fattura
-#    paginate_by = 25
-#    template_name = 'fattura_list.html'
-#    permission_required = ('gestione.view_fattura','gestione.delete_fattura','gestione.view_paziente')
-#    def get_queryset(self):
-#        return Fattura.objects.filter(data_incasso=None)
-
 
 class FatturaDetailView(LoginRequiredMixin, generic.DetailView):
     """Vista di dettaglio della fattura, ovvero il file da stampare"""
@@ -110,8 +97,8 @@ class FatturaDetailView(LoginRequiredMixin, generic.DetailView):
 
 @login_required
 def fattura_pdf(request, pk, per_cliente):
-    #return docgen.genera_fattura(request,pk,per_cliente)
     return docgen.genera_fattura(request,pk,per_cliente)
+
 @login_required
 def privacy_pdf(request,pk):
     """Generazione modulo privacy del paziente pk"""
@@ -133,20 +120,19 @@ def consenso_m_pdf(request,pk):
 class NuovoPaziente(LoginRequiredMixin,CreateView):
     model = Paziente
     permission_required = ['gestione.add_paziente']
-    form_class = NuovoPazienteForm
+    fields = '__all__'
+    exclude = ['ultima_modifica']
 
 class ModificaPaziente(LoginRequiredMixin,UpdateView):
     model = Paziente
-    fields = ['nome','cognome','codfisc','piva',
-        'paese','provincia','cap','via','civico',
-        'telefono','email','data_nascita','paese_nascita',
-        'provincia_nascita','prezzo']
+    fields = '__all__'
+    exclude = ['ultima_modifica']
     permission_required = ['gestione.add_paziente']
 
 class ModificaFattura(LoginRequiredMixin,UpdateView):
     model = Fattura
-    fields = ['valore','data','numero','data_incasso','testo']
     permission_required = ['gestione.add_fattura']
+    form_class = ModificaFatturaForm
 
 @permission_required('gestione.add_fattura')
 def nuovaFattura(request):
