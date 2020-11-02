@@ -21,12 +21,12 @@ class NuovaFatturaForm(ModelForm):
         fields = ['paziente','valore','data','numero','data_incasso','testo']
         
         
-    def clean_data(self):
-        '''Data non nel futuro'''
-        data = self.cleaned_data['data']
-        if data > date.today():
-            raise ValidationError('Data non valida - futuro')
-        return data
+    #def clean_data(self):
+    #    '''Data non nel futuro'''
+    #    data = self.cleaned_data['data']
+    #    if data > date.today():
+    #        raise ValidationError('Data non valida - futuro')
+    #    return data
     
     def clean_numero(self):
         '''Numero non esistente nell'anno corrente'''
