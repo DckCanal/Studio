@@ -17,7 +17,17 @@
 
 </style>
 <div class="container">
-<h1>Pazienti</h1>
+<div class="row mb-3">
+  <div class="col-md-8"><h1>Pazienti</h1></div>
+  <div class="col-md-4">
+    <form id="search" method="POST" action="{% url 'search' %}">
+      {% csrf_token %}
+      <input type="text" class="form-control" id="txtSearch" name="txtSearch" autofocus>
+      <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Vai</button>
+    </form>
+  </div>
+</div>
+
 {% for p in page_obj %}
 <div class="row mb-3">
     <div class="col-md-8 themed-grid-col"><a href="{{p.get_absolute_url}}">{{p}}</a></div>
@@ -46,4 +56,15 @@
   </span>
 </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+        $(document).ready(function(){ 
+            $("#txtSearch").autocomplete({
+                source: "{% url 'search' %}",
+                minLength: 2,
+              });        });</script>
 {% endblock main-content %}

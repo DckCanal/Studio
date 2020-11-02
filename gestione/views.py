@@ -1,10 +1,10 @@
 """Modulo con le views di pazienti e fatture"""
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.db.models import Max
+from django.db.models import Max, Q
 from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -197,4 +197,18 @@ class PazienteDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('pazienti')
     permission_required = ['gestione.delete_paziente']
 
-
+@permission_required('gestione.view_paziente')
+def autocompleteModel(request):
+    if request.method == 'GET':
+        if 'term' in request.GET:
+            qs = Paziente.objects.filter(Q(cognome__icontains=request.GET.get('term')) | Q(nome__icontains=request.GET.get('term')))
+            paz = list()
+            for p in qs:
+                paz.append(' '.join([p.nome,p.cognome]) + ', PK:'+str(p.pk))
+            return JsonResponse(paz,safe=False)
+    elif request.method == 'POST':
+        if 'txtSearch' in request.POST and ', PK:' in request.POST.get('txtSearch'):
+            pk = request.POST.get('txtSearch').split(', PK:')[1]
+            paz = Paziente.objects.get(pk=pk)
+            return HttpResponseRedirect(paz.get_absolute_url())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
