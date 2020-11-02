@@ -109,7 +109,7 @@
           <a class="btn btn-outline-primary btn-sm" href="{% url 'incassa-oggi' f.id %}">Incassa oggi</a>
           {% endif %}
           {% if f.date_diverse %}
-          <a class="btn btn-outline-primary btn-sm" href="{% url 'fattura-pdf-commercialista' f.id %}">PDF commercialista</a>
+          <a class="btn btn-outline-primary btn-sm" href="{% url 'fattura-commercialista' f.id %}">Commercialista</a>
           {% endif %}
           
         </td>
