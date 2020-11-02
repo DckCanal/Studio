@@ -69,6 +69,10 @@
                 </select>
               </div>
               <div class="input-group mb-3">
+                <label class="input-group-text" for="paziente">Paziente</label>
+                <input type="text" class="form-control" id="paziente" name="paziente"{% if paziente_selezionato %}placeholder="{{paziente_selezionato}}"{% endif %}>
+              </div>
+              <div class="input-group mb-3">
               <input type="submit" value="Filtra">
             </div>
         </form>
@@ -135,6 +139,14 @@
 </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script>
+        $(document).ready(function(){ 
+            $("#paziente").autocomplete({
+                source: "{% url 'autocompleteFiltroFattura' %}",
+                minLength: 2,
+              });        });</script>
 
 {% endblock main-content %}

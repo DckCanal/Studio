@@ -50,6 +50,7 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
         qs = Fattura.objects.all()
         anno = self.request.GET.get('anno','0')
         mese = self.request.GET.get('mese','0')
+        paziente = self.request.GET.get('paziente','')
         if anno != '0':
             qs = qs.filter(data__year=anno)
 
@@ -63,6 +64,8 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
         elif incasso == 'da-incassare':
             return qs.filter(data_incasso__isnull=True)
 
+        if paziente != '' and ', PK:' in paziente:
+            qs = qs.filter(paziente=paziente.split(', PK:')[1])
         return qs
     
     def get_context_data(self,**kwargs):
@@ -82,8 +85,11 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
             context['mese_selezionato'] = int(self.request.GET.get('mese'))
         if self.request.GET.get('stato-incasso'):
             context['stato_incasso_selezionato'] = self.request.GET.get('stato-incasso')
-
+        if self.request.GET.get('paziente')  and ', PK:' in self.request.GET.get('paziente'):
+            context['paziente_selezionato'] = self.request.GET.get('paziente').split(', PK:')[0]
         return context
+    
+    
 
 #class FatturaNonIncassataListView(LoginRequiredMixin, generic.ListView):
 #    pass
@@ -218,3 +224,14 @@ def autocompleteModel(request):
             paz = Paziente.objects.get(pk=pk)
             return HttpResponseRedirect(paz.get_absolute_url())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+@permission_required('gestione.view_paziente')
+def autocompleteFiltroFattura(request):
+    if request.method == 'GET':
+        if 'term' in request.GET:
+            qs = Paziente.objects.filter(Q(cognome__icontains=request.GET.get('term')) | Q(nome__icontains=request.GET.get('term')))
+            paz = list()
+            for p in qs:
+                paz.append(' '.join([p.nome,p.cognome]) + ', PK:'+str(p.pk))
+            return JsonResponse(paz,safe=False)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
