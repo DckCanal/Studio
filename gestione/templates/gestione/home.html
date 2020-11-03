@@ -3,8 +3,18 @@
 {% block main-content %}
 
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<!--<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">-->
+<div class="row mb-3">
+    <div class="col-8">
 <h1>Ultimi pazienti modificati</h1>
+</div>
+<div class="col-4">
+    <form id="search" method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input type="text" class="form-control" id="txtSearch" name="txtSearch" autofocus>
+        <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Vai</button>
+      </form>
+</div>
 </div>
 <div class="container">
 {% for p in paz %}
@@ -28,5 +38,15 @@
 {% endif %}
 {% endfor %}
 </div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+        $(document).ready(function(){ 
+            $("#txtSearch").autocomplete({
+                source: "{% url 'search' %}",
+                minLength: 2,
+              });        });</script>
 
 {% endblock main-content %}
