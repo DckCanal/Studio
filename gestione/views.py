@@ -86,7 +86,7 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
         if self.request.GET.get('stato-incasso'):
             context['stato_incasso_selezionato'] = self.request.GET.get('stato-incasso')
         if self.request.GET.get('paziente')  and ', PK:' in self.request.GET.get('paziente'):
-            context['paziente_selezionato'] = self.request.GET.get('paziente').split(', PK:')[0]
+            context['paziente_selezionato'] = self.request.GET.get('paziente')
         return context
 
 class FatturaDetailView(LoginRequiredMixin, generic.DetailView):

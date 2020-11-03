@@ -70,7 +70,7 @@
               </div>
               <div class="input-group mb-3">
                 <label class="input-group-text" for="paziente">Paziente</label>
-                <input type="text" class="form-control" id="paziente" name="paziente"{% if paziente_selezionato %}placeholder="{{paziente_selezionato}}"{% endif %}>
+                <input type="text" class="form-control" id="paziente" name="paziente"{% if paziente_selezionato %}value="{{paziente_selezionato}}"{% endif %}>
               </div>
               <div class="input-group mb-3">
               <input type="submit" value="Filtra">
