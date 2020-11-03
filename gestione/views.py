@@ -9,7 +9,7 @@ from .models import Paziente, Fattura
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import docgen
-from gestione.forms import NuovaFatturaForm, NuovoPazienteForm, ModificaFatturaForm
+from gestione.forms import NuovaFatturaForm, ModificaFatturaForm
 from datetime import date
 
 @login_required
