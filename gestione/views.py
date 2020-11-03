@@ -44,7 +44,6 @@ class FatturaListView(LoginRequiredMixin, generic.ListView):
     """Vista di elenco delle fatture, per la stampa o l'eliminazione"""
     model = Fattura
     paginate_by=25
-    context_object_name = 'elenco_fatture'
     permission_required = ('gestione.view_fattura','gestione.delete_fattura','gestione.view_paziente')
     def get_queryset(self):
         qs = Fattura.objects.all()
