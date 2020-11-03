@@ -211,13 +211,3 @@ def autocompleteModel(request):
             return HttpResponseRedirect(paz.get_absolute_url())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-@permission_required('gestione.view_paziente')
-def autocompleteFiltroFattura(request):
-    if request.method == 'GET':
-        if 'term' in request.GET:
-            qs = Paziente.objects.filter(Q(cognome__icontains=request.GET.get('term')) | Q(nome__icontains=request.GET.get('term')))
-            paz = list()
-            for p in qs:
-                paz.append(' '.join([p.nome,p.cognome]) + ', PK:'+str(p.pk))
-            return JsonResponse(paz,safe=False)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
