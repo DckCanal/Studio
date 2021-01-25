@@ -2,4 +2,4 @@
 .vscode/
 *.sqlite3
 .env
-
+.db_backups
