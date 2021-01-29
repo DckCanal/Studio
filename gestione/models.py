@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
-from .utils import data_italiana
+from .utils import data_italiana, data_italiana_breve
 
 class Paziente(models.Model):
 	"""Classe per rappresentare il paziente."""
@@ -60,7 +60,7 @@ class Fattura(models.Model):
 		ordering = ['-data','-numero']
 	
 	def __str__(self):
-		return str(self.numero) + " - " + data_italiana(self.data)
+		return str(self.numero) + " - " + data_italiana_breve(self.data)
 		
 	def get_absolute_url(self):
 		return reverse('dettaglio-fattura', args=[str(self.id)])

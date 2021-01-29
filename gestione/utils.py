@@ -15,3 +15,6 @@ mese = {
 }
 def data_italiana(data:date):
     return str(data.day)+' '+mese[data.month]+' '+str(data.year)
+
+def data_italiana_breve(data:date):
+    return str(data.day)+' '+mese[data.month][:3]+' '+str(data.year)
