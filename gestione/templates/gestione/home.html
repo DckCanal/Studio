@@ -26,24 +26,26 @@
   <div class="card-deck mb-3 text-center row">
     {% endif %}
     <div class="col-lg-4">
-      <div class="card mb-4 shadow-sm">
+      <div class="card mb-2 shadow-sm">
         <div class="card-header">
           <h4 class="font-weight-normal">
             <a href="{{p.get_absolute_url}}"> {{p}}</a>
           </h4>
         </div>
-        <div class="card-body">
-          <p>{{p.ultima_modifica}}</p>
-          <a
-            class="btn btn-primary btn-lg"
-            href="{% url 'fattura-veloce' p.pk %}"
-            >Fattura veloce</a
-          >
-          <a
-            class="btn btn-outline-primary"
-            href="{% url 'modifica-paziente' p.pk %}"
-            >Modifica</a
-          >
+        <div class="card-body pt-3 pb-1">
+          <p>
+            {{p.ultima_modifica}}
+            <a
+              class="btn btn-primary btn-md"
+              href="{% url 'fattura-veloce' p.pk %}"
+              >📃</a
+            >
+            <a
+              class="btn btn-outline-primary btn-md"
+              href="{% url 'modifica-paziente' p.pk %}"
+              >🖊</a
+            >
+          </p>
         </div>
       </div>
     </div>

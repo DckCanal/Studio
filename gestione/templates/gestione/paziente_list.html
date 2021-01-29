@@ -1,70 +1,85 @@
-{% extends "generic.html" %}
-{% block main-content %}
+{% extends "generic.html" %} {% block main-content %}
 <style>
-    .themed-grid-col {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(86, 61, 124, .2);
-}
+  .themed-grid-col {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(86, 61, 124, 0.2);
+  }
 
-.themed-container {
-  padding: 15px;
-  margin-bottom: 30px;
-  background-color: rgba(0, 123, 255, .15);
-  border: 1px solid rgba(0, 123, 255, .2);
-}
-
+  .themed-container {
+    padding: 15px;
+    margin-bottom: 30px;
+    background-color: rgba(0, 123, 255, 0.15);
+    border: 1px solid rgba(0, 123, 255, 0.2);
+  }
 </style>
 <div class="container">
-<div class="row mb-3">
-  <div class="col-md-8"><h1>Pazienti</h1></div>
-  <div class="col-md-4">
-    <form id="search" method="POST" action="{% url 'search' %}">
-      {% csrf_token %}
-      <input type="text" class="form-control" id="txtSearch" name="txtSearch" autofocus>
-      <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Vai</button>
-    </form>
-  </div>
-</div>
-
-{% for p in page_obj %}
-<div class="row mb-3">
-    <div class="col-md-8 themed-grid-col"><a href="{{p.get_absolute_url}}">{{p}}</a></div>
-    <div class="col-md-4 themed-grid-col text-center">
-        <a class="btn btn-primary btn-sm" href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a>
-        <a class="btn btn-outline-primary btn-sm" href="{% url 'modifica-paziente' p.pk %}">Modifica</a>
+  <div class="row mb-3">
+    <div class="col-md-8"><h1>Pazienti</h1></div>
+    <div class="col-md-4">
+      <form id="search" method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input
+          type="text"
+          class="form-control"
+          id="txtSearch"
+          name="txtSearch"
+          autofocus
+        />
+        <button type="submit" class="btn btn-outline-primary btn-sm mt-3">
+          Vai
+        </button>
+      </form>
     </div>
   </div>
-  
-{% endfor %}
-<div class="pagination">
-  <span class="step-links">
+
+  {% for p in page_obj %}
+  <div class="row">
+    <div class="col-md-8 themed-grid-col">
+      <a href="{{p.get_absolute_url}}">{{p}}</a>
+    </div>
+    <div class="col-md-4 themed-grid-col text-center">
+      <a class="btn btn-primary btn-sm" href="{% url 'fattura-veloce' p.pk %}"
+        >📃</a
+      >
+      <a
+        class="btn btn-outline-primary btn-sm"
+        href="{% url 'modifica-paziente' p.pk %}"
+        >🖊</a
+      >
+    </div>
+  </div>
+
+  {% endfor %}
+  <div class="pagination">
+    <span class="step-links">
       {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
       {% endif %}
 
       <span class="current">
-          Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}.
+        Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}.
       </span>
 
       {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">avanti</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">fine &raquo;</a>
+      <a href="?page={{ page_obj.next_page_number }}">avanti</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">fine &raquo;</a>
       {% endif %}
-  </span>
+    </span>
+  </div>
 </div>
-</div>
-
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
-        $(document).ready(function(){ 
-            $("#txtSearch").autocomplete({
-                source: "{% url 'search' %}",
-                minLength: 2,
-              });        });</script>
+  $(document).ready(function () {
+    $("#txtSearch").autocomplete({
+      source: "{% url 'search' %}",
+      minLength: 2,
+    });
+  });
+</script>
 {% endblock main-content %}
