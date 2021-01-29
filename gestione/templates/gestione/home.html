@@ -19,8 +19,9 @@
 <div class="container">
 {% for p in paz %}
 {% if forloop.counter in indici %}
-<div class="card-deck mb-3 text-center">
+<div class="card-deck mb-3 text-center row">
 {% endif %}
+<div class="col-lg-4">
     <div class="card mb-4 shadow-sm">
         <div class="card-header">
             <h4 class="font-weight-normal">
@@ -29,10 +30,11 @@
         </div>
         <div class="card-body">
             <p>Ultima modifica: {{p.ultima_modifica}}</p>
-            <p><a class="btn btn-primary btn-lg" href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a></p>
-            <p><a class="btn btn-outline-primary" href="{% url 'modifica-paziente' p.pk %}">Modifica</a></p>
+            <a class="btn btn-primary btn-lg" href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a>
+            <a class="btn btn-outline-primary" href="{% url 'modifica-paziente' p.pk %}">Modifica</a>
         </div>
     </div>
+</div>
 {% if forloop.counter|add:"1" in indici %}
 </div>
 {% endif %}
