@@ -1,54 +1,67 @@
-{% extends 'generic.html' %}
-
-{% block main-content %}
-
+{% extends 'generic.html' %} {% block main-content %}
 
 <!--<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">-->
 <div class="row mb-3">
-    <div class="col-8">
-<h1>Ultimi pazienti modificati</h1>
-</div>
-<div class="col-4">
+  <div class="col-8">
+    <h1>Ultimi pazienti modificati</h1>
+  </div>
+  <div class="col-4">
     <form id="search" method="POST" action="{% url 'search' %}">
-        {% csrf_token %}
-        <input type="text" class="form-control" id="txtSearch" name="txtSearch" autofocus>
-        <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Vai</button>
-      </form>
-</div>
+      {% csrf_token %}
+      <input
+        type="text"
+        class="form-control"
+        id="txtSearch"
+        name="txtSearch"
+        autofocus
+      />
+      <button type="submit" class="btn btn-outline-primary btn-sm mt-3">
+        Vai
+      </button>
+    </form>
+  </div>
 </div>
 <div class="container">
-{% for p in paz %}
-{% if forloop.counter in indici %}
-<div class="card-deck mb-3 text-center row">
-{% endif %}
-<div class="col-lg-4">
-    <div class="card mb-4 shadow-sm">
+  {% for p in paz %} {% if forloop.counter in indici %}
+  <div class="card-deck mb-3 text-center row">
+    {% endif %}
+    <div class="col-lg-4">
+      <div class="card mb-4 shadow-sm">
         <div class="card-header">
-            <h4 class="font-weight-normal">
-            <a href="{{p.get_absolute_url}}">
-            {{p}}</a></h4>
+          <h4 class="font-weight-normal">
+            <a href="{{p.get_absolute_url}}"> {{p}}</a>
+          </h4>
         </div>
         <div class="card-body">
-            <p>Ultima modifica: {{p.ultima_modifica}}</p>
-            <a class="btn btn-primary btn-lg" href="{% url 'fattura-veloce' p.pk %}">Fattura veloce</a>
-            <a class="btn btn-outline-primary" href="{% url 'modifica-paziente' p.pk %}">Modifica</a>
+          <p>{{p.ultima_modifica}}</p>
+          <a
+            class="btn btn-primary btn-lg"
+            href="{% url 'fattura-veloce' p.pk %}"
+            >Fattura veloce</a
+          >
+          <a
+            class="btn btn-outline-primary"
+            href="{% url 'modifica-paziente' p.pk %}"
+            >Modifica</a
+          >
         </div>
+      </div>
     </div>
-</div>
-{% if forloop.counter|add:"1" in indici %}
-</div>
-{% endif %}
-{% endfor %}
+    {% if forloop.counter|add:"1" in indici %}
+  </div>
+  {% endif %} {% endfor %}
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
-        $(document).ready(function(){ 
-            $("#txtSearch").autocomplete({
-                source: "{% url 'search' %}",
-                minLength: 2,
-              });        });</script>
+  $(document).ready(function () {
+    $("#txtSearch").autocomplete({
+      source: "{% url 'search' %}",
+      minLength: 2,
+    });
+  });
+</script>
 
 {% endblock main-content %}

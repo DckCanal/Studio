@@ -136,7 +136,7 @@ USE_I18N = True
 
 USE_L10N = False
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
-
+DATETIME_FORMAT = 'j/m/Y G:i'
 USE_TZ = True
 
 
