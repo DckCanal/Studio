@@ -213,3 +213,31 @@ def autocompleteModel(request):
             return HttpResponseRedirect(paz.get_absolute_url())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+#Dividere le view: una per la pagina html ed una per il caricamento asincrono dei dati
+@permission_required('gestione.view_fattura')
+def analisi(request):
+    fatt = Fattura.objects.all()#.order_by('-ultima_modifica')[:15]
+    aggr_anno = {}
+    aggr_mese = {}
+    for f in fatt:
+        #aggr_anno[f'{f.data.year}'] += f.valore
+        #print(f)
+        #print(type(f.data.year))
+        if(str(f.data.year) in aggr_anno):
+            aggr_anno[str(f.data.year)] += f.valore
+        else:
+            aggr_anno[str(f.data.year)] = f.valore
+        
+        if(str(f.data.year) in aggr_mese): 
+            if(str(f.data.month) in aggr_mese[str(f.data.year)]):
+                aggr_mese[f.data.year][f.data.month] += f.valore
+            else:
+                aggr_mese[f.data.year][f.data.month] = f.valore
+        else:
+            aggr_mese[f.data.year] = {}
+            aggr_mese[f.data.year][f.data.month] = f.valore
+    context = {
+        'fatturato_annuale': aggr_anno,
+        'fatturato_mensile': aggr_mese
+    }
+    return render(request,'gestione/statistiche.html',context)

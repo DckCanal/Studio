@@ -1,0 +1,13 @@
+{% extends 'generic.html' %} {% block main-content %}
+<!-- hai rotto le balle -->
+<h1>Fatturato annuale</h1>
+{% for anno in fatturato_annuale %}
+<p>{{ anno }}</p>
+{% endfor %} {{ fatturato_annuale}}
+
+<h1>Fatturato mensile</h1>
+{% for fatturati_mensili in fatturato_mensile %}
+<!-- ciao -->
+{% endfor %}
+<p>{{fatturato_mensile}}</p>
+{% endblock main-content %}
