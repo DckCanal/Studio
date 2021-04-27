@@ -12,6 +12,7 @@ from . import docgen
 from gestione.forms import NuovaFatturaForm, ModificaFatturaForm
 from datetime import date
 from django.core import serializers
+import json
 
 @login_required
 @permission_required('gestione.view_paziente')
@@ -215,22 +216,29 @@ def autocompleteModel(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def apiFatture(request):
-    fat = Fattura.objects.all()
-    jfat = serializers.serialize('json',fat)
-    content = {
-        "status":"success",
-        "content":{
-            "fatture":jfat
-        }
-    }
-    #return JsonResponse(jfat,safe=False)
-    return HttpResponse(jfat, content_type='application/json')
+    if request.method == 'GET':
+        fat = Fattura.objects.all()
+        #jfat = serializers.serialize('json',fat,fields = ('paziente','valore','data'))
+        #content = {
+        #    "status":"success",
+        #    "content":{
+        #        "fatture":jfat
+        #    }
+        #}
+        #return JsonResponse(jfat,safe=False)
+        return HttpResponse(serializers.serialize('json',fat), content_type='application/json')
 
 def apiFattura(request,pk):
-    pass
+    if request.method == 'GET':
+        fat = get_object_or_404(Fattura,pk=pk)
+        return HttpResponse(serializers.serialize('json',[fat]),content_type='application/json')
 
 def apiPazienti(request):
-    pass
+    if request.method == 'GET':
+        paz = Paziente.objects.all()
+        return HttpResponse(serializers.serialize('json',paz),content_type='application/json')
 
 def apiPaziente(request,pk):
-    pass
+    if request.method == 'GET':
+        paz = get_object_or_404(Paziente,pk=pk)
+        return HttpResponse(serializers.serialize('json',[paz]),content_type='application/json')
