@@ -19,4 +19,17 @@ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U marco -d studio
 # Install required dependencies for postgresql and pillow
 sudo apt install libpq-dev
 # TODO MISSING PILLOW!! #only for ubuntu minimal...
+sudo apt install python3-venv
+
+# Install and configure virtualenvwrapper
+pip3 install virtualenvwrapper
+# edit .bashrc or .zshrc adding the following lines
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/dev
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source $HOME/.local/bin/virtualenvwrapper.sh
+
+# creating virtual environment
+mkvirtualenv studio
+workon studio
 pip3 install -r requirements.txt
