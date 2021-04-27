@@ -3,7 +3,7 @@ sudo snap install heroku --classic
 
 # Install and configure postgresql [insert pw austroungarico]
 sudo apt install postgresql postgresql-contrib
-sudo -u postgres createuser marco -P
+sudo -u postgres createuser marco -P -d
 sudo -u marco createdb studio
 
 # Install and configure git
@@ -12,11 +12,11 @@ git config --global user.name "Marco De Canal"
 git config --global user.email "marco.decanal@gmail.com"
 
 # Export db from heroku
-heroku pg:backups:capture
-heroku pg:backups:download
+heroku pg:backups:capture -a ilsalice
+heroku pg:backups:download -a ilsalice
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -U marco -d studio latest.dump
 
 # Install required dependencies for postgresql and pillow
 sudo apt install libpq-dev
-TODO MISSING PILLOW!!
+# TODO MISSING PILLOW!! #only for ubuntu minimal...
 pip3 install -r requirements.txt
