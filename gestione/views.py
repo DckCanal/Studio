@@ -1,7 +1,7 @@
 """Modulo con le views di pazienti e fatture"""
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Max, Q
@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from . import docgen
 from gestione.forms import NuovaFatturaForm, ModificaFatturaForm
 from datetime import date
+from django.core import serializers
 
 @login_required
 @permission_required('gestione.view_paziente')
@@ -213,3 +214,23 @@ def autocompleteModel(request):
             return HttpResponseRedirect(paz.get_absolute_url())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+def apiFatture(request):
+    fat = Fattura.objects.all()
+    jfat = serializers.serialize('json',fat)
+    content = {
+        "status":"success",
+        "content":{
+            "fatture":jfat
+        }
+    }
+    #return JsonResponse(jfat,safe=False)
+    return HttpResponse(jfat, content_type='application/json')
+
+def apiFattura(request,pk):
+    pass
+
+def apiPazienti(request):
+    pass
+
+def apiPaziente(request,pk):
+    pass

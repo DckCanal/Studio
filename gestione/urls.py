@@ -23,4 +23,8 @@ urlpatterns = [
     path('elimina-fattura/<int:pk>',views.FatturaDelete.as_view(),name='elimina-fattura'),
     path('elimina-paziente/<int:pk>',views.PazienteDelete.as_view(),name='elimina-paziente'),
     path('ajax_calls/search/', views.autocompleteModel, name='search'),
+    path('api/fattura/<int:pk>',views.apiFattura),
+    path('api/fatture/',views.apiFatture),
+    path('api/paziente/<int:pk>',views.apiPaziente),
+    path('api/pazienti/',views.apiPazienti),
 ]
