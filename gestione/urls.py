@@ -1,7 +1,14 @@
 """Modulo per la gestione degli URLS per l'app Gestione"""
 from django.urls import path
-#from django.urls import include
 from . import views
+# API
+from django.urls import include
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'fatture', views.FatturaViewSet)
+router.register(r'pazienti', views.PazienteViewSet)
+
 
 urlpatterns = [
     path('', views.home_page, name='home'),
@@ -29,4 +36,6 @@ urlpatterns = [
     # path('api/fatture/',views.apiFatture),
     # path('api/paziente/<int:pk>',views.apiPaziente),
     # path('api/pazienti/',views.apiPazienti),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

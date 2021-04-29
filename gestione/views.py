@@ -13,6 +13,9 @@ from gestione.forms import NuovaFatturaForm, ModificaFatturaForm
 from datetime import date
 from django.core import serializers
 import json
+# API
+from rest_framework import viewsets, permissions
+from .serializers import FatturaSerializer, PazienteSerializer
 
 @login_required
 @permission_required('gestione.view_paziente')
@@ -242,3 +245,21 @@ def autocompleteModel(request):
 #     if request.method == 'GET':
 #         paz = get_object_or_404(Paziente,pk=pk)
 #         return HttpResponse(serializers.serialize('json',[paz]),content_type='application/json')
+
+class FatturaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows invoices to be viewed or edited.
+    """
+    queryset = Fattura.objects.all()
+    # .order_by('-date_joined')
+    serializer_class = FatturaSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class PazienteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows patients to be viewed or edited.
+    """
+    queryset = Paziente.objects.all()
+    serializer_class = PazienteSerializer
+    permission_classes = [permissions.IsAuthenticated]
