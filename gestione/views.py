@@ -215,30 +215,30 @@ def autocompleteModel(request):
             return HttpResponseRedirect(paz.get_absolute_url())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-def apiFatture(request):
-    if request.method == 'GET':
-        fat = Fattura.objects.all()
-        #jfat = serializers.serialize('json',fat,fields = ('paziente','valore','data'))
-        #content = {
-        #    "status":"success",
-        #    "content":{
-        #        "fatture":jfat
-        #    }
-        #}
-        #return JsonResponse(jfat,safe=False)
-        return HttpResponse(serializers.serialize('json',fat), content_type='application/json')
+# def apiFatture(request):
+#     if request.method == 'GET':
+#         fat = Fattura.objects.all()
+#         #jfat = serializers.serialize('json',fat,fields = ('paziente','valore','data'))
+#         #content = {
+#         #    "status":"success",
+#         #    "content":{
+#         #        "fatture":jfat
+#         #    }
+#         #}
+#         #return JsonResponse(jfat,safe=False)
+#         return HttpResponse(serializers.serialize('json',fat), content_type='application/json')
 
-def apiFattura(request,pk):
-    if request.method == 'GET':
-        fat = get_object_or_404(Fattura,pk=pk)
-        return HttpResponse(serializers.serialize('json',[fat]),content_type='application/json')
+# def apiFattura(request,pk):
+#     if request.method == 'GET':
+#         fat = get_object_or_404(Fattura,pk=pk)
+#         return HttpResponse(serializers.serialize('json',[fat]),content_type='application/json')
 
-def apiPazienti(request):
-    if request.method == 'GET':
-        paz = Paziente.objects.all()
-        return HttpResponse(serializers.serialize('json',paz),content_type='application/json')
+# def apiPazienti(request):
+#     if request.method == 'GET':
+#         paz = Paziente.objects.all()
+#         return HttpResponse(serializers.serialize('json',paz),content_type='application/json')
 
-def apiPaziente(request,pk):
-    if request.method == 'GET':
-        paz = get_object_or_404(Paziente,pk=pk)
-        return HttpResponse(serializers.serialize('json',[paz]),content_type='application/json')
+# def apiPaziente(request,pk):
+#     if request.method == 'GET':
+#         paz = get_object_or_404(Paziente,pk=pk)
+#         return HttpResponse(serializers.serialize('json',[paz]),content_type='application/json')
