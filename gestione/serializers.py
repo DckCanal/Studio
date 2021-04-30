@@ -3,6 +3,7 @@ from .models import Fattura, Paziente
 
 
 class FatturaSerializer(serializers.HyperlinkedModelSerializer):
+    paziente = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     class Meta:
         model = Fattura
         fields = ['paziente', 'valore', 'data', 'data_incasso', 'testo', 'numero']
