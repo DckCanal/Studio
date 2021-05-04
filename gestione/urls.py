@@ -6,8 +6,8 @@ from django.urls import include
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'fatture', views.FatturaViewSet)
-router.register(r'pazienti', views.PazienteViewSet)
+router.register(r'fatture', views.FatturaViewSet, basename='fattura')
+router.register(r'pazienti', views.PazienteViewSet, basename='paziente')
 
 
 urlpatterns = [
