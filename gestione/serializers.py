@@ -6,7 +6,7 @@ class FatturaSerializer(serializers.HyperlinkedModelSerializer):
     paziente = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     class Meta:
         model = Fattura
-        fields = ['paziente', 'valore', 'data', 'data_incasso', 'testo', 'numero']
+        fields = ['pk','paziente', 'valore', 'data', 'data_incasso', 'testo', 'numero']
 
 
 class PazienteSerializer(serializers.HyperlinkedModelSerializer):

@@ -13,6 +13,7 @@ from gestione.forms import NuovaFatturaForm, ModificaFatturaForm
 from datetime import date
 from django.core import serializers
 import json
+import datetime
 # API
 from rest_framework import viewsets, permissions
 from .serializers import FatturaSerializer, PazienteSerializer
@@ -250,10 +251,20 @@ class FatturaViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows invoices to be viewed or edited.
     """
-    queryset = Fattura.objects.all()
-    # .order_by('-date_joined')
     serializer_class = FatturaSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Fattura.objects.all()
+        anno = self.request.query_params.get('anno')
+        if anno is None:
+            anno = datetime.datetime.now().date().year
+        queryset = queryset.filter(data__year=anno)
+
+        paziente = self.request.query_params.get('paziente')
+        if paziente is not None:
+            queryset = queryset.filter(paziente=paziente)
+        return queryset
 
 
 class PazienteViewSet(viewsets.ModelViewSet):
