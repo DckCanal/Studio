@@ -255,17 +255,11 @@ class FatturaViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Fattura.objects.all().order_by('-numero')
+        queryset = Fattura.objects.all().order_by('-data','-numero')
         anno = self.request.query_params.get('anno')
 
-        # ATTENZIONE: Il queryset ora filtra anche quando richiedi una singola fattura,
-        # e le cerca solo all'interno dell'anno corrente!!!
-        # Modifica proposta: usare la paginazione
-        # -- se l'utente non richiede un anno specifico, vengono inviate solo le ultime N fatture,
-        # -- ordinate in base al numero d'ordine, in ordine decrescente
-        if anno is None:
-            anno = datetime.datetime.now().date().year
-        queryset = queryset.filter(data__year=anno)
+        if anno is not None:
+            queryset = queryset.filter(data__year=anno)
 
         paziente = self.request.query_params.get('paziente')
         if paziente is not None:
