@@ -264,6 +264,9 @@ class FatturaViewSet(viewsets.ModelViewSet):
         paziente = self.request.query_params.get('paziente')
         if paziente is not None:
             queryset = queryset.filter(paziente=paziente)
+        
+        if paziente is None and anno is None:
+            queryset = queryset.filter(data__year=datetime.datetime.now().date().year)
         return queryset
 
 
