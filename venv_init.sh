@@ -1,3 +1,4 @@
+!#/bin/bash
 sudo apt install python3-pip
 sudo pip install virtualenv
 sudo pip install virtualenvwrapper
