@@ -10,6 +10,9 @@ sudo -u marco createdb studio
 sudo apt install git
 git config --global user.name "Marco De Canal"
 git config --global user.email "marco.decanal@gmail.com"
+
+# Move into the dev directory
+heroku login
 git remote add heroku https://git.heroku.com/ilsalice.git
 
 # Export db from heroku
