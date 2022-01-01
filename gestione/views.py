@@ -256,8 +256,8 @@ class FatturaViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Fattura.objects.all().order_by('-data','-numero')
+        
         anno = self.request.query_params.get('anno')
-
         if anno is not None:
             queryset = queryset.filter(data__year=anno)
 
@@ -265,8 +265,9 @@ class FatturaViewSet(viewsets.ModelViewSet):
         if paziente is not None:
             queryset = queryset.filter(paziente=paziente)
         
-        if paziente is None and anno is None:
-            queryset = queryset.filter(data__year=datetime.datetime.now().date().year)
+        # if paziente is None and anno is None:
+            # queryset = queryset.filter(data__year=datetime.datetime.now().date().year)
+
         return queryset
 
 
